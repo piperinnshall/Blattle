@@ -13,18 +13,24 @@ extends CharacterBody2D
 @export var jump_buffer_time: float = 0.2
 
 # Dodge roll
-@export var dodge_speed: float = 500.0
+@export var dodge_speed: float = 600.0
 @export var dodge_duration: float = 0.3
 @export var dodge_cooldown: float = 1.0
 
 # Input buffering
 @export var input_buffer_time: float = 0.1
 
+@onready var attack_system: Node2D = $AttackSystem
+
 # State variables
 var jumps_remaining: int = 0
 var is_dodging: bool = false
 var can_dodge: bool = true
 var facing_direction: int = 1
+
+# Invincibility during dash
+var original_collision_layer: int
+var original_collision_mask: int
 
 # Timers
 var coyote_timer: float = 0.0
@@ -39,6 +45,9 @@ var buffered_dodge: bool = false
 
 func _ready():
 	jumps_remaining = max_jumps
+	# Store original collision settings
+	original_collision_layer = collision_layer
+	original_collision_mask = collision_mask
 
 func _physics_process(delta):
 	handle_gravity(delta)
@@ -50,8 +59,14 @@ func _physics_process(delta):
 		handle_movement(delta)
 		handle_jump()
 	
+	handle_attack_restrictions()
 	move_and_slide()
 	update_facing_direction()
+
+func handle_attack_restrictions():
+	if attack_system.is_attacking:
+		velocity.x *= 0.8
+		velocity.x *= 0.9
 
 func handle_gravity(delta):
 	if not is_on_floor():
@@ -89,7 +104,7 @@ func handle_coyote_time(delta):
 		coyote_timer -= delta
 
 func handle_movement(delta):
-	var direction =  Input.get_axis("left","right")
+	var direction = Input.get_axis("left","right")
 	
 	if direction != 0:
 		# Accelerate towards target speed
@@ -161,6 +176,9 @@ func start_dodge():
 	velocity.x = dodge_direction * dodge_speed
 	velocity.y = -200  # sends player up a bit
 	
+	# Make player invincible during dash
+	enable_dash_invincibility()
+	
 	# Optional: Add dodge sound or effect here
 	# AudioManager.play_sound("dodge")
 
@@ -174,7 +192,36 @@ func get_dodge_direction() -> int:
 
 func end_dodge():
 	is_dodging = false
+	
+	# Restore normal collision
+	disable_dash_invincibility()
+	
 	# Optional: Add any end dodge effects here
+
+func enable_dash_invincibility():
+	# Store current collision settings
+	original_collision_layer = collision_layer
+	original_collision_mask = collision_mask
+	
+	# Remove collision with enemies (typically layer 2) but keep floor collision
+	# Assuming: Layer 1 = Player, Layer 2 = Enemy, Layer 3 = Floor/Walls
+	# You may need to adjust these numbers based on your layer setup
+	
+	# Remove from layer 1 (so enemies can't detect player)
+	collision_layer = 0
+	
+	# Keep only floor collision (layer 3) in the mask, remove enemy collision
+	# This assumes floors are on layer 3 - adjust as needed
+	collision_mask = 4  # Binary: 100 (only layer 3)
+	
+	print("Dash invincibility enabled")
+
+func disable_dash_invincibility():
+	# Restore original collision settings
+	collision_layer = original_collision_layer
+	collision_mask = original_collision_mask
+	
+	print("Dash invincibility disabled")
 
 func update_facing_direction():
 	var input_direction = Input.get_axis("left", "right")
@@ -191,7 +238,32 @@ func is_falling() -> bool:
 func get_speed() -> float:
 	return velocity.length()
 
-# Debug information (optional)
+func get_dodge_cooldown_progress() -> float:
+	if dodge_cooldown_timer > 0:
+		return dodge_cooldown_timer / dodge_cooldown
+	else:
+		return 0.0
+
+func is_attacking() -> bool:
+	return attack_system.is_attacking if attack_system else false
+
+func can_attack() -> bool:
+	return attack_system.is_attack_ready() if attack_system else false
+
+# Check if player is invincible (can be called by enemies or damage systems)
+func is_invincible() -> bool:
+	return is_dodging
+
+# Method for taking damage - can be overridden to check invincibility
+func take_damage(damage: float):
+	if is_invincible():
+		print("Player is invincible - damage ignored!")
+		return
+	
+	print("Player took ", damage, " damage")
+	# Add your damage handling logic here
+
+# Debug information
 func _on_debug_info():
 	print("Jumps remaining: ", jumps_remaining)
 	print("Coyote time: ", coyote_timer)
@@ -199,3 +271,6 @@ func _on_debug_info():
 	print("Can dodge: ", can_dodge)
 	print("Buffered jump: ", buffered_jump)
 	print("Buffered dodge: ", buffered_dodge)
+	print("Is invincible: ", is_invincible())
+	print("Collision layer: ", collision_layer)
+	print("Collision mask: ", collision_mask)

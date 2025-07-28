@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dduiowvsy1h6p"]
+
+[ext_resource type="Texture2D" uid="uid://chkjdun4hokek" path="res://scenes/5111178.png" id="1_6wbbs"]
+[ext_resource type="Script" uid="uid://btovcscf65spn" path="res://scripts/test_npc.gd" id="1_passs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_passs"]
+radius = 31.257
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rrwvx"]
+radius = 30.8058
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_gwt4r"]
+radius = 31.1448
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6sstl"]
+radius = 244.074
+
+[node name="FloatingEnemy" type="CharacterBody2D"]
+collision_mask = 2
+script = ExtResource("1_passs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_passs")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+scale = Vector2(0.127442, 0.127442)
+texture = ExtResource("1_6wbbs")
+
+[node name="HitArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("CircleShape2D_rrwvx")
+disabled = true
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource("CircleShape2D_gwt4r")
+disabled = true
+debug_color = Color(0.641395, 0.464073, 0.651618, 0.42)
+
+[node name="PlayerDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector"]
+shape = SubResource("CircleShape2D_6sstl")
