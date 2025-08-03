@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://c41xbgmicjshj"]
 
 [ext_resource type="Script" uid="uid://br0n4rfbfco7g" path="res://piper/scripts/menu/main_menu.gd" id="1_stnk5"]
-[ext_resource type="Texture2D" uid="uid://xgggymcvi4mw" path="res://piper/resources/main_menu/blob.jpg" id="2_g7qgd"]
+[ext_resource type="Texture2D" uid="uid://xgggymcvi4mw" path="res://piper/resources/menu/blob.jpg" id="2_g7qgd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5vwmi"]
 texture = ExtResource("2_g7qgd")

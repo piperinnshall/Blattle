@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmhdct4cbcl2r"]
+[gd_scene load_steps=4 format=3 uid="uid://cmhdct4cbcl2r"]
 
 [ext_resource type="Script" uid="uid://dtifyktxmbimu" path="res://piper/scripts/level/level.gd" id="1_xga17"]
 [ext_resource type="Texture2D" uid="uid://b7vuj63lkfxku" path="res://piper/resources/level/images.png" id="2_3pj2v"]
+[ext_resource type="PackedScene" uid="uid://by0kv3qeqhfxm" path="res://piper/scenes/character/player.tscn" id="3_urkm7"]
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_xga17")
@@ -15,3 +16,6 @@ polygon = PackedVector2Array(0, 0, 0, 540, 960, 540, 960, 0, 800, 0, 800, 434, 1
 position = Vector2(480, 487)
 scale = Vector2(4.26667, 0.471111)
 texture = ExtResource("2_3pj2v")
+
+[node name="Player" parent="." instance=ExtResource("3_urkm7")]
+position = Vector2(386, 146)
