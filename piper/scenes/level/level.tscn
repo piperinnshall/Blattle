@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmhdct4cbcl2r"]
+
+[ext_resource type="Script" uid="uid://dtifyktxmbimu" path="res://piper/scripts/level/level.gd" id="1_xga17"]
+[ext_resource type="Texture2D" uid="uid://b7vuj63lkfxku" path="res://piper/resources/level/images.png" id="2_3pj2v"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_xga17")
+
+[node name="LevelBody" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBody"]
+polygon = PackedVector2Array(0, 0, 0, 540, 960, 540, 960, 0, 800, 0, 800, 434, 160, 434, 160, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="LevelBody"]
+position = Vector2(480, 487)
+scale = Vector2(4.26667, 0.471111)
+texture = ExtResource("2_3pj2v")

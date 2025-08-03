@@ -1,0 +1,88 @@
+[gd_scene load_steps=10 format=3 uid="uid://do7uew7t2n8is"]
+
+[ext_resource type="Script" uid="uid://d244wbg60df3d" path="res://leo/scripts/test_player.gd" id="1_48cbw"]
+[ext_resource type="Script" uid="uid://c6wgp3hbown7u" path="res://leo/scenes/progress_bar.gd" id="2_k3vus"]
+[ext_resource type="Script" uid="uid://ql3vwssjp7yd" path="res://leo/scenes/attack_system.gd" id="3_by1fd"]
+[ext_resource type="Script" uid="uid://dmujpl8aj26w1" path="res://leo/scripts/label.gd" id="4_hb7ax"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hb7ax"]
+radius = 32.249
+
+[sub_resource type="Gradient" id="Gradient_48cbw"]
+offsets = PackedFloat32Array(0, 0.909091, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k3vus"]
+gradient = SubResource("Gradient_48cbw")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.685)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb7ax"]
+size = Vector2(48, 62.75)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpjq4"]
+size = Vector2(98.5, 52)
+
+[node name="TestPlayer" type="CharacterBody2D"]
+position = Vector2(0, -2)
+script = ExtResource("1_48cbw")
+acceleration = 3000.0
+friction = 1900.0
+jump_velocity = -600.0
+max_jumps = 1
+dodge_speed = 1000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hb7ax")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+texture = SubResource("GradientTexture2D_k3vus")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -20.0
+offset_top = -63.0
+offset_right = 19.0
+offset_bottom = -36.0
+max_value = 1.0
+show_percentage = false
+script = ExtResource("2_k3vus")
+ready_color = Color(0, 0, 0.545098, 0.611765)
+background_color = Color(0, 0, 0, 0.662745)
+
+[node name="AttackSystem" type="Node2D" parent="."]
+script = ExtResource("3_by1fd")
+
+[node name="UpAttack" type="Area2D" parent="AttackSystem"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/UpAttack"]
+position = Vector2(0, -76.5)
+shape = SubResource("RectangleShape2D_hb7ax")
+
+[node name="DownAttack" type="Area2D" parent="AttackSystem"]
+position = Vector2(0, 126)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/DownAttack"]
+position = Vector2(0, -58.625)
+shape = SubResource("RectangleShape2D_hb7ax")
+
+[node name="RightAttack" type="Area2D" parent="AttackSystem"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/RightAttack"]
+position = Vector2(85, 0)
+shape = SubResource("RectangleShape2D_mpjq4")
+
+[node name="LeftAttack" type="Area2D" parent="AttackSystem"]
+position = Vector2(-135, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/LeftAttack"]
+position = Vector2(49, 0)
+shape = SubResource("RectangleShape2D_mpjq4")
+
+[node name="Label" type="Label" parent="."]
+top_level = true
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 21.0
+script = ExtResource("4_hb7ax")
