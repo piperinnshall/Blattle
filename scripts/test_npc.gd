@@ -18,6 +18,10 @@ const KNOCKBACK_DECAY: float = 8.0
 # Health constants
 const DEATH_DAMAGE_THRESHOLD: float = 30.0
 
+# Damage constants - fast and responsive
+const DAMAGE_PER_SECOND: float = 20.0
+const DAMAGE_TICK_INTERVAL: float = 0.1
+
 # Export parameters for designer tweaking
 @export var knockback_resistance: float = 1.0
 @export var enable_rotation: bool = true
@@ -28,6 +32,8 @@ var is_following: bool = false
 var knockback_timer: float = 0.0
 var knockback_force_vector: Vector2 = Vector2.ZERO
 var total_damage: float = 0.0
+var is_damaging_player: bool = false
+var damage_tick_timer: float = 0.0
 
 # Node references
 @onready var player_detector: Area2D = $PlayerDetector
@@ -42,6 +48,12 @@ func _connect_signals():
 	player_detector.body_entered.connect(_on_player_detected)
 	player_detector.body_exited.connect(_on_player_lost)
 	hit_area.body_entered.connect(_on_hit_by_player)
+	
+	# Connect damage area signals for dealing damage to player
+	var damage_area = get_node_or_null("DamageArea")
+	if damage_area:
+		damage_area.body_entered.connect(_on_damage_area_entered)
+		damage_area.body_exited.connect(_on_damage_area_exited)
 
 func _debug_collision_setup():
 	print("=== ENEMY COLLISION SETUP ===")
@@ -57,6 +69,9 @@ func _physics_process(delta):
 		_follow_player(delta)
 	else:
 		_decelerate(delta)
+	
+	# Handle damage over time
+	_handle_damage_over_time(delta)
 	
 	move_and_slide()
 	_update_sprite_rotation(delta)
@@ -175,6 +190,32 @@ func take_damage_with_knockback(damage: float, knockback_direction: Vector2):
 
 func on_hit(damage: float):
 	take_damage(damage)
+
+# Fast responsive damage when in damage area
+func _handle_damage_over_time(delta):
+	if is_damaging_player:
+		damage_tick_timer -= delta
+		if damage_tick_timer <= 0:
+			_deal_damage_to_player()
+			damage_tick_timer = DAMAGE_TICK_INTERVAL
+
+func _deal_damage_to_player():
+	if player and player.has_method("take_damage"):
+		var damage_amount = DAMAGE_PER_SECOND * DAMAGE_TICK_INTERVAL
+		player.take_damage(damage_amount)
+		print("Enemy dealing ", damage_amount, " damage to player")
+
+func _on_damage_area_entered(body):
+	if body.is_in_group("Players"):
+		print("Player entered damage area - starting damage over time")
+		is_damaging_player = true
+		damage_tick_timer = 0.0  # Start dealing damage immediately
+
+func _on_damage_area_exited(body):
+	if body.is_in_group("Players"):
+		print("Player left damage area - stopping damage over time")
+		is_damaging_player = false
+		damage_tick_timer = 0.0
 
 # Utility functions
 func is_player_detected() -> bool:

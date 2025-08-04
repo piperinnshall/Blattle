@@ -20,6 +20,10 @@ extends CharacterBody2D
 # Input buffering
 @export var input_buffer_time: float = 0.1
 
+# Health system
+@export var max_health: float = 100.0
+var health: float = 100.0
+
 @onready var attack_system: Node2D = $AttackSystem
 
 # State variables
@@ -45,9 +49,13 @@ var buffered_dodge: bool = false
 
 func _ready():
 	jumps_remaining = max_jumps
+	health = max_health
 	# Store original collision settings
 	original_collision_layer = collision_layer
 	original_collision_mask = collision_mask
+	
+	# Add to Players group
+	add_to_group("Players")
 
 func _physics_process(delta):
 	handle_gravity(delta)
@@ -138,9 +146,6 @@ func perform_jump():
 	
 	# Reset coyote time after jumping
 	coyote_timer = 0.0
-	
-	# Optional: Add jump sound or effect here
-	# AudioManager.play_sound("jump")
 
 func handle_dodge(delta):
 	# Update dodge cooldown
@@ -178,9 +183,6 @@ func start_dodge():
 	
 	# Make player invincible during dash
 	enable_dash_invincibility()
-	
-	# Optional: Add dodge sound or effect here
-	# AudioManager.play_sound("dodge")
 
 func get_dodge_direction() -> int:
 	var input_direction = Input.get_axis("left", "right")
@@ -195,23 +197,16 @@ func end_dodge():
 	
 	# Restore normal collision
 	disable_dash_invincibility()
-	
-	# Optional: Add any end dodge effects here
 
 func enable_dash_invincibility():
 	# Store current collision settings
 	original_collision_layer = collision_layer
 	original_collision_mask = collision_mask
 	
-	# Remove collision with enemies (typically layer 2) but keep floor collision
-	# Assuming: Layer 1 = Player, Layer 2 = Enemy, Layer 3 = Floor/Walls
-	# You may need to adjust these numbers based on your layer setup
-	
 	# Remove from layer 1 (so enemies can't detect player)
 	collision_layer = 0
 	
 	# Keep only floor collision (layer 3) in the mask, remove enemy collision
-	# This assumes floors are on layer 3 - adjust as needed
 	collision_mask = 4  # Binary: 100 (only layer 3)
 	
 	print("Dash invincibility enabled")
@@ -227,6 +222,34 @@ func update_facing_direction():
 	var input_direction = Input.get_axis("left", "right")
 	if input_direction != 0:
 		facing_direction = sign(input_direction)
+
+# Health system methods
+func get_health() -> float:
+	return health
+
+func get_max_health() -> float:
+	return max_health
+
+func take_damage(damage: float):
+	if is_invincible():
+		print("Player is invincible - damage ignored!")
+		return
+	
+	health -= damage
+	health = max(0, health)
+	print("Player took ", damage, " damage. Health: ", health, "/", max_health)
+	
+	if health <= 0:
+		die()
+
+func heal(amount: float):
+	health += amount
+	health = min(max_health, health)
+	print("Player healed ", amount, ". Health: ", health, "/", max_health)
+
+func die():
+	print("Player died!")
+	# Add death logic here - respawn, game over screen, etc.
 
 # Utility functions
 func is_jumping() -> bool:
@@ -254,17 +277,9 @@ func can_attack() -> bool:
 func is_invincible() -> bool:
 	return is_dodging
 
-# Method for taking damage - can be overridden to check invincibility
-func take_damage(damage: float):
-	if is_invincible():
-		print("Player is invincible - damage ignored!")
-		return
-	
-	print("Player took ", damage, " damage")
-	# Add your damage handling logic here
-
 # Debug information
 func _on_debug_info():
+	print("Health: ", health, "/", max_health)
 	print("Jumps remaining: ", jumps_remaining)
 	print("Coyote time: ", coyote_timer)
 	print("Is dodging: ", is_dodging)

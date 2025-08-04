@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b2i3pr2ejrmkd"]
+[gd_scene load_steps=15 format=3 uid="uid://b2i3pr2ejrmkd"]
 
 [ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
 [ext_resource type="PackedScene" uid="uid://do7uew7t2n8is" path="res://scenes/TestPlayer.tscn" id="2_6ewva"]
 [ext_resource type="PackedScene" uid="uid://cfr2gwmxc3aii" path="res://scenes/hittable_object.tscn" id="3_jiwm1"]
 [ext_resource type="PackedScene" uid="uid://cdcq14nucamxn" path="res://scenes/moon.tscn" id="5_7ixgg"]
+[ext_resource type="PackedScene" uid="uid://bv5jav4dhu5nu" path="res://scenes/HealthBars.tscn" id="5_hyqgw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ewva"]
 size = Vector2(1171.15, 123)
@@ -93,3 +94,13 @@ one_way_collision = true
 position = Vector2(0.249999, 2.74998)
 scale = Vector2(3.39062, 0.125)
 texture = SubResource("GradientTexture2D_bx6wm")
+
+[node name="Control" parent="." node_paths=PackedStringArray("player1") instance=ExtResource("5_hyqgw")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.0
+offset_left = 578.0
+offset_right = 578.0
+grow_vertical = 1
+player1 = NodePath("../Node2D")
