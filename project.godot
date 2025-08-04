@@ -17,6 +17,10 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 enabled=PackedStringArray("res://addons/softbody2d/plugin.cfg")
 
+[global_group]
+
+Players=""
+
 [input]
 
 jump={

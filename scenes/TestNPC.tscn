@@ -1,10 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://dduiowvsy1h6p"]
+[gd_scene load_steps=9 format=3 uid="uid://dduiowvsy1h6p"]
 
-[ext_resource type="Texture2D" uid="uid://chkjdun4hokek" path="res://scenes/5111178.png" id="1_6wbbs"]
 [ext_resource type="Script" uid="uid://btovcscf65spn" path="res://scripts/test_npc.gd" id="1_passs"]
+[ext_resource type="Texture2D" uid="uid://bnb5fjhfn3jk" path="res://radius-circle-round-geometry-512.webp" id="2_passs"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_passs"]
 radius = 31.257
+
+[sub_resource type="Gradient" id="Gradient_passs"]
+offsets = PackedFloat32Array(0.653333, 0.666667)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rrwvx"]
+gradient = SubResource("Gradient_passs")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rrwvx"]
 radius = 30.8058
@@ -13,7 +22,7 @@ radius = 30.8058
 radius = 31.1448
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6sstl"]
-radius = 244.074
+radius = 603.367
 
 [node name="FloatingEnemy" type="CharacterBody2D"]
 collision_mask = 2
@@ -23,8 +32,13 @@ script = ExtResource("1_passs")
 shape = SubResource("CircleShape2D_passs")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
-scale = Vector2(0.127442, 0.127442)
-texture = ExtResource("1_6wbbs")
+texture = SubResource("GradientTexture2D_rrwvx")
+
+[node name="NpcSprite" type="Sprite2D" parent="CollisionShape2D"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(-0.312578, -0.312578)
+scale = Vector2(0.237, 0.237)
+texture = ExtResource("2_passs")
 
 [node name="HitArea" type="Area2D" parent="."]
 collision_layer = 2

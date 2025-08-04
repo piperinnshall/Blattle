@@ -5,7 +5,7 @@ extends Node2D
 @export var attack_duration: float = 0.2
 @export var attack_cooldown: float = 0.5
 @export var knockback_force: float = 400.0
-@export var knockback_override_strength: float = 0.8  # How much to override existing velocity (0-1)
+@export var knockback_override_strength: float = 0.8
 
 # Attack directions
 enum AttackDirection {
@@ -28,26 +28,45 @@ var cooldown_timer: float = 0.0
 @onready var left_attack: Area2D = $LeftAttack
 @onready var right_attack: Area2D = $RightAttack
 
+# References to attack sprites
+@onready var up_sprite: AnimatedSprite2D = $UpAttack/AttackSprite
+@onready var down_sprite: AnimatedSprite2D = $DownAttack/AttackSprite
+@onready var left_sprite: AnimatedSprite2D = $LeftAttack/AttackSprite
+@onready var right_sprite: AnimatedSprite2D = $RightAttack/AttackSprite
+
 # Reference to player
 var player: CharacterBody2D
 
 func _ready():
 	player = get_parent()
 	setup_attack_areas()
+	setup_attack_sprites()
 	
 	# Connect area signals
 	up_attack.body_entered.connect(_on_attack_hit)
 	down_attack.body_entered.connect(_on_attack_hit)
 	left_attack.body_entered.connect(_on_attack_hit)
 	right_attack.body_entered.connect(_on_attack_hit)
+	
+	# Connect animation finished signals
+	up_sprite.animation_finished.connect(_on_attack_animation_finished)
+	down_sprite.animation_finished.connect(_on_attack_animation_finished)
+	left_sprite.animation_finished.connect(_on_attack_animation_finished)
+	right_sprite.animation_finished.connect(_on_attack_animation_finished)
 
 func setup_attack_areas():
-	# Just disable monitoring for all attack areas
-	# Position and shapes are set up in the editor
+	# Disable monitoring for all attack areas
 	up_attack.monitoring = false
 	down_attack.monitoring = false
 	left_attack.monitoring = false
 	right_attack.monitoring = false
+
+func setup_attack_sprites():
+	# Hide all attack sprites initially
+	up_sprite.visible = false
+	down_sprite.visible = false
+	left_sprite.visible = false
+	right_sprite.visible = false
 
 func _process(delta):
 	handle_attack_timers(delta)
@@ -78,10 +97,10 @@ func start_attack():
 	# Determine attack direction
 	current_attack_direction = get_attack_direction()
 	
-	# Activate appropriate attack area
+	# Activate appropriate attack area and play animation
 	activate_attack_area(current_attack_direction)
+	play_attack_animation(current_attack_direction)
 	
-	# Optional: Add attack sound/animation here
 	print("Attacking ", AttackDirection.keys()[current_attack_direction])
 
 func get_attack_direction() -> AttackDirection:
@@ -116,15 +135,47 @@ func activate_attack_area(direction: AttackDirection):
 		AttackDirection.RIGHT:
 			right_attack.monitoring = true
 
+func play_attack_animation(direction: AttackDirection):
+	# Hide all sprites first
+	hide_all_attack_sprites()
+	
+	# Show and play the appropriate animation
+	match direction:
+		AttackDirection.UP:
+			up_sprite.visible = true
+			up_sprite.play("up_attack")
+		AttackDirection.DOWN:
+			down_sprite.visible = true
+			down_sprite.play("down_attack")
+		AttackDirection.LEFT:
+			left_sprite.visible = true
+			left_sprite.play("left_attack")
+		AttackDirection.RIGHT:
+			right_sprite.visible = true
+			right_sprite.play("right_attack")
+
 func deactivate_all_attack_areas():
 	up_attack.monitoring = false
 	down_attack.monitoring = false
 	left_attack.monitoring = false
 	right_attack.monitoring = false
 
+func hide_all_attack_sprites():
+	up_sprite.visible = false
+	down_sprite.visible = false
+	left_sprite.visible = false
+	right_sprite.visible = false
+
 func end_attack():
 	is_attacking = false
 	deactivate_all_attack_areas()
+	hide_all_attack_sprites()
+
+func _on_attack_animation_finished():
+	# Optional: End attack when animation finishes instead of using timer
+	# This ensures the visual effect matches the actual attack duration
+	if is_attacking:
+		end_attack()
 
 func _on_attack_hit(body):
 	# Only process hits during active attacks

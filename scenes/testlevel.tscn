@@ -1,17 +1,43 @@
-[gd_scene load_steps=7 format=3 uid="uid://b2i3pr2ejrmkd"]
+[gd_scene load_steps=14 format=3 uid="uid://b2i3pr2ejrmkd"]
 
-[ext_resource type="Texture2D" uid="uid://b7vuj63lkfxku" path="res://images.png" id="1_mfx43"]
+[ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
 [ext_resource type="PackedScene" uid="uid://do7uew7t2n8is" path="res://scenes/TestPlayer.tscn" id="2_6ewva"]
 [ext_resource type="PackedScene" uid="uid://cfr2gwmxc3aii" path="res://scenes/hittable_object.tscn" id="3_jiwm1"]
-[ext_resource type="PackedScene" uid="uid://dduiowvsy1h6p" path="res://scenes/TestNPC.tscn" id="4_6kl7x"]
+[ext_resource type="PackedScene" uid="uid://cdcq14nucamxn" path="res://scenes/moon.tscn" id="5_7ixgg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ewva"]
-size = Vector2(975, 171)
+size = Vector2(1171.15, 123)
+
+[sub_resource type="Gradient" id="Gradient_7ixgg"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hyqgw"]
+gradient = SubResource("Gradient_7ixgg")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jiwm1"]
-size = Vector2(92, 366)
+size = Vector2(360, 916)
+
+[sub_resource type="Gradient" id="Gradient_6kl7x"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7ixgg"]
+gradient = SubResource("Gradient_6kl7x")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6kl7x"]
+size = Vector2(216.5, 1.5)
+
+[sub_resource type="Gradient" id="Gradient_hyqgw"]
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_bx6wm"]
+gradient = SubResource("Gradient_hyqgw")
 
 [node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(574, 346)
+scale = Vector2(0.750667, 0.750667)
+texture = ExtResource("1_7ixgg")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 position = Vector2(81, 447)
@@ -21,14 +47,14 @@ gravity_scale = 0.0
 freeze = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
-position = Vector2(477.5, 75.5)
+position = Vector2(499, 192)
 scale = Vector2(0.998165, 1)
 shape = SubResource("RectangleShape2D_6ewva")
 
 [node name="Sprite2D" type="Sprite2D" parent="RigidBody2D/CollisionShape2D"]
-position = Vector2(0.500891, 5.72205e-06)
-scale = Vector2(4.33685, 0.76)
-texture = ExtResource("1_mfx43")
+position = Vector2(-6.01103, -1.90735e-05)
+scale = Vector2(18.4013, 1.89563)
+texture = SubResource("GradientTexture2D_hyqgw")
 
 [node name="Node2D" parent="." instance=ExtResource("2_6ewva")]
 position = Vector2(410, 111)
@@ -41,13 +67,29 @@ position = Vector2(963, 83)
 freeze = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
-position = Vector2(36, 173)
+position = Vector2(365, 118)
 shape = SubResource("RectangleShape2D_jiwm1")
 
 [node name="CollisionShape2D" type="Sprite2D" parent="RigidBody2D2/CollisionShape2D"]
-position = Vector2(2, -0.499985)
-scale = Vector2(0.417778, 1.62222)
-texture = ExtResource("1_mfx43")
+position = Vector2(-47, -52.9999)
+scale = Vector2(4.19326, 16.2823)
+texture = SubResource("GradientTexture2D_7ixgg")
 
-[node name="FloatingEnemy" parent="." instance=ExtResource("4_6kl7x")]
-position = Vector2(157, 113)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="Moon" parent="." instance=ExtResource("5_7ixgg")]
+position = Vector2(540, 135)
+
+[node name="RigidBody2D3" type="RigidBody2D" parent="."]
+position = Vector2(141, 403)
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D3"]
+position = Vector2(-28.75, -9.75)
+shape = SubResource("RectangleShape2D_6kl7x")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D3/CollisionShape2D"]
+position = Vector2(0.249999, 2.74998)
+scale = Vector2(3.39062, 0.125)
+texture = SubResource("GradientTexture2D_bx6wm")

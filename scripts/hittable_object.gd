@@ -71,7 +71,7 @@ func take_damage(damage: float):
 func handle_death():
 	# Handle object destruction
 	print("Object destroyed!")
-	queue_free()
+	#queue_free()
 
 # Alternative method: If you want to use the attack system's body detection
 func on_hit(damage: float):
