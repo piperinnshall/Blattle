@@ -11,8 +11,7 @@ const MAX_HEALTH: float = 100.0
 # UI Node references
 @onready var player1_health_bar: ProgressBar = $HBoxContainer/Player1HealthBar
 @onready var player2_health_bar: ProgressBar = $HBoxContainer/Player2HealthBar
-@onready var player1_label: Label = $HBoxContainer/Player1Label
-@onready var player2_label: Label = $HBoxContainer/Player2Label
+
 
 # Health tracking
 var player1_health: float = MAX_HEALTH

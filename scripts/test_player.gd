@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+signal player_died(player: Node)
+
+
 # Movement parameters
 @export var speed: float = 300.0
 @export var acceleration: float = 1500.0
@@ -249,7 +252,9 @@ func heal(amount: float):
 
 func die():
 	print("Player died!")
-	# Add death logic here - respawn, game over screen, etc.
+	player_died.emit(self)
+	set_physics_process(false)
+	set_process_input(false)
 
 # Utility functions
 func is_jumping() -> bool:
