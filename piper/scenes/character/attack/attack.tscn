@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dgk3vbtcbvnpk"]
+
+[ext_resource type="Script" uid="uid://bp4g4fx202u5c" path="res://piper/scripts/character/attack/attack.gd" id="1_kk81w"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ipbt4"]
+
+[node name="Attack" type="Area2D"]
+script = ExtResource("1_kk81w")
+
+[node name="HitBoxShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ipbt4")
+
+[node name="LifeSpan" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="LifeSpan" to="." method="_on_life_span_timeout"]
