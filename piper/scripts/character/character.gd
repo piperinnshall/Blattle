@@ -1,8 +1,12 @@
 extends CharacterBody2D
 class_name Character
 
+# --- Exported Variables ---
+
 @export_group("Properties")
 @export var speed: float = 200.0
+@export var acceleration: float = 1000.0
+@export var friction: float = 800.0
 
 @export_subgroup("Jump")
 @export var gravity: float = 800.0
@@ -12,58 +16,61 @@ class_name Character
 
 # --- State ---
 
-var _buffered_jump: bool = false
 var _jumps_left: int
-var _jump_buffer_timer: float = 0.0
-var input_dir: int = 0
+var _input_buffer := {}
 
-# --- Builtin ---
-
-func _ready():
-	_jumps_left = max_jumps
+# --- Built-in ---
 
 func _physics_process(delta):
-	_update_jump_buffer(delta)
 	_apply_gravity(delta)
-	_process_jump()
-	_handle_movement(delta)
-	_update_state()
-	
+	_apply_movement(delta)
+	_update_input_buffer(delta)
+	_handle_jump_input()
 	move_and_slide()
+	if is_on_floor():
+		_jumps_left = max_jumps
 
 # --- Abstract ---
 
-func _handle_movement(_delta):
-	pass
+func _get_movement_input() -> float: return 0
+func _get_jump_input() -> bool: return false
 
-# --- Default ---
+# --- Movement ---
 
-func buffer_jump():
-	_buffered_jump = true
-	_jump_buffer_timer = jump_buffer_time
-
-func _update_jump_buffer(delta):
-	if _buffered_jump:
-		_jump_buffer_timer -= delta
-		if _jump_buffer_timer <= 0.0:
-			_buffered_jump = false
-
-func _apply_gravity(delta):
+func _apply_gravity(delta: float):
 	if not is_on_floor():
 		velocity.y += gravity * delta
-	elif velocity.y > 0.0:
-		velocity.y = 0.0
 
-func _process_jump():
-	if _buffered_jump:
-		if _jumps_left > 0:
-			_do_jump()
-			_buffered_jump = false
+func _apply_movement(delta: float):
+	var input_dir = _get_movement_input()
+	if input_dir != 0.0:
+		velocity.x = move_toward(velocity.x, input_dir * speed, acceleration * delta)
+	else:
+		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 
-func _do_jump():
+func _handle_jump_input():
+	if _get_jump_input(): _buffer_input("jump")
+	if _input_buffer.has("jump") and _can_jump():
+		_perform_jump()
+		_input_buffer.erase("jump")
+
+func _can_jump() -> bool:
+	return _jumps_left > 0
+
+func _perform_jump():
 	velocity.y = -jump_force
 	_jumps_left -= 1
 
-func _update_state():
-	if is_on_floor():
-		_jumps_left = max_jumps
+# --- Input Buffer ---
+
+func _buffer_input(action: String):
+	_input_buffer[action] = jump_buffer_time
+
+func _update_input_buffer(delta: float):
+	var to_remove := []
+	for action in _input_buffer.keys():
+		_input_buffer[action] -= delta
+		if _input_buffer[action] <= 0:
+			to_remove.append(action)
+	for action in to_remove:
+		_input_buffer.erase(action)

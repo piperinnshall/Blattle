@@ -6,7 +6,6 @@
 
 [node name="Player" instance=ExtResource("1_4flbx")]
 script = ExtResource("1_ri3t2")
-max_jumps = 0
 
 [node name="Sprite2D" parent="HurtboxShape" index="0"]
 scale = Vector2(0.038, 0.038)
