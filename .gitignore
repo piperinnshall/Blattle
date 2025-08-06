@@ -5,3 +5,7 @@
 # MacOS specific ignores
 
 .DS_Store
+
+# Piper specific ignores
+
+addons/vim
