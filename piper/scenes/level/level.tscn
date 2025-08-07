@@ -29,5 +29,5 @@ texture = ExtResource("2_3pj2v")
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LevelBody"]
 polygon = PackedVector2Array(-30, 0, -30, 540, 990, 540, 990, 0, 960, 0, 960, 434, 0, 434, 0, 0)
 
-[node name="Character" parent="." instance=ExtResource("2_urkm7")]
-position = Vector2(407, 114)
+[node name="Player" parent="." instance=ExtResource("2_urkm7")]
+position = Vector2(389, 100)

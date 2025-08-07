@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://dgk3vbtcbvnpk"]
 
-[ext_resource type="Script" uid="uid://bp4g4fx202u5c" path="res://piper/scripts/character/attacks/attack.gd" id="1_kk81w"]
-[ext_resource type="Texture2D" uid="uid://bk741as5vg4kg" path="res://piper/resources/character/Circle.png" id="2_irm6l"]
+[ext_resource type="Script" uid="uid://bp4g4fx202u5c" path="res://piper/scripts/character/attacks/attacks.gd" id="1_cwila"]
+[ext_resource type="Texture2D" uid="uid://bk741as5vg4kg" path="res://piper/resources/character/Circle.png" id="2_ueid3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ipbt4"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_irm6l"]
 blend_mode = 2
 
-[node name="Attack" type="Area2D"]
-script = ExtResource("1_kk81w")
+[node name="Attacks" type="Area2D"]
+script = ExtResource("1_cwila")
 
 [node name="HitBoxShape" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ipbt4")
@@ -17,7 +17,7 @@ shape = SubResource("CircleShape2D_ipbt4")
 [node name="Sprite2D" type="Sprite2D" parent="HitBoxShape"]
 material = SubResource("CanvasItemMaterial_irm6l")
 scale = Vector2(0.013, 0.013)
-texture = ExtResource("2_irm6l")
+texture = ExtResource("2_ueid3")
 
 [node name="LifeSpan" type="Timer" parent="."]
 one_shot = true

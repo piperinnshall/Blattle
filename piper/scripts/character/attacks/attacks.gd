@@ -1,5 +1,5 @@
 extends Area2D
-class_name Attack
+class_name Attacks
 
 @export var damage: int = 1
 
