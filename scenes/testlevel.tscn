@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://b2i3pr2ejrmkd"]
+[gd_scene load_steps=18 format=3 uid="uid://b2i3pr2ejrmkd"]
 
 [ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
 [ext_resource type="Script" uid="uid://bvr74pqghfcdf" path="res://scripts/testlevel.gd" id="1_hyqgw"]
@@ -16,6 +16,9 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_hyqgw"]
 gradient = SubResource("Gradient_7ixgg")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx6wm"]
+size = Vector2(296, 592)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jiwm1"]
 size = Vector2(360, 916)
@@ -66,6 +69,13 @@ position = Vector2(410, 111)
 [node name="HittableObject" parent="." instance=ExtResource("3_jiwm1")]
 position = Vector2(703, 169)
 
+[node name="RigidBody2D4" type="RigidBody2D" parent="."]
+freeze = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D4"]
+position = Vector2(-147, 291)
+shape = SubResource("RectangleShape2D_bx6wm")
+
 [node name="RigidBody2D2" type="RigidBody2D" parent="."]
 position = Vector2(963, 83)
 freeze = true
@@ -75,8 +85,8 @@ position = Vector2(365, 118)
 shape = SubResource("RectangleShape2D_jiwm1")
 
 [node name="CollisionShape2D" type="Sprite2D" parent="RigidBody2D2/CollisionShape2D"]
-position = Vector2(-47, -52.9999)
-scale = Vector2(4.19326, 16.2823)
+position = Vector2(-45.4078, -52.9999)
+scale = Vector2(4.1435, 16.2823)
 texture = SubResource("GradientTexture2D_7ixgg")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
