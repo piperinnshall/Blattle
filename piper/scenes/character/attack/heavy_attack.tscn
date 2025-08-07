@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmrfk13i7tg22"]
-
-[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attack/attack.tscn" id="1_gd58r"]
-[ext_resource type="Script" uid="uid://dgygrh7qlmetr" path="res://piper/scripts/character/attack/heavy_attack.gd" id="2_kou8c"]
-
-[node name="Attack" instance=ExtResource("1_gd58r")]
-scale = Vector2(1.5, 1.5)
-script = ExtResource("2_kou8c")

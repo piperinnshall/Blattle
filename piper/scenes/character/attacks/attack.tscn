@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dgk3vbtcbvnpk"]
 
-[ext_resource type="Script" uid="uid://bp4g4fx202u5c" path="res://piper/scripts/character/attack/attack.gd" id="1_kk81w"]
+[ext_resource type="Script" uid="uid://bp4g4fx202u5c" path="res://piper/scripts/character/attacks/attack.gd" id="1_kk81w"]
 [ext_resource type="Texture2D" uid="uid://bk741as5vg4kg" path="res://piper/resources/character/Circle.png" id="2_irm6l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ipbt4"]

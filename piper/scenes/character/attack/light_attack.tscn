@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://csibry5bact0d"]
-
-[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attack/attack.tscn" id="1_50jny"]
-[ext_resource type="Script" uid="uid://cgsrbrur7pol3" path="res://piper/scripts/character/attack/light_attack.gd" id="2_uyq8f"]
-
-[node name="LightAttack" instance=ExtResource("1_50jny")]
-script = ExtResource("2_uyq8f")
