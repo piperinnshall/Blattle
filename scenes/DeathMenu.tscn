@@ -38,3 +38,9 @@ text = "Restart
 layout_mode = 2
 text = "Quit
 "
+
+[node name="VolumeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
+layout_mode = 2

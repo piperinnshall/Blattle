@@ -7,7 +7,10 @@ extends Node2D
 @export var knockback_force: float = 400.0
 @export var knockback_override_strength: float = 0.8
 
-# Attack directions
+# Knockback constants
+const KNOCKBACK_IMPULSE_MULTIPLIER: float = 0.3
+
+# Attack directions enum
 enum AttackDirection {
 	UP,
 	DOWN,
@@ -15,34 +18,42 @@ enum AttackDirection {
 	RIGHT
 }
 
-# State variables
+# Attack state
 var is_attacking: bool = false
 var can_attack: bool = true
 var current_attack_direction: AttackDirection
 var attack_timer: float = 0.0
 var cooldown_timer: float = 0.0
 
-# References to attack areas
+# Attack area references
 @onready var up_attack: Area2D = $UpAttack
 @onready var down_attack: Area2D = $DownAttack
 @onready var left_attack: Area2D = $LeftAttack
 @onready var right_attack: Area2D = $RightAttack
 
-# References to attack sprites
+# Attack sprite references
 @onready var up_sprite: AnimatedSprite2D = $UpAttack/AttackSprite
 @onready var down_sprite: AnimatedSprite2D = $DownAttack/AttackSprite
 @onready var left_sprite: AnimatedSprite2D = $LeftAttack/AttackSprite
 @onready var right_sprite: AnimatedSprite2D = $RightAttack/AttackSprite
 
-# Reference to player
+# Audio references
+@onready var hit_sound: AudioStreamPlayer2D = $HitSound
+
+# Player reference
 var player: CharacterBody2D
 
 func _ready():
+	# Get player reference
 	player = get_parent()
+	
+	# Initialize attack systems
 	setup_attack_areas()
 	setup_attack_sprites()
-	
-	# Connect area signals
+	connect_signals()
+
+func connect_signals():
+	# Connect hit detection signals
 	up_attack.body_entered.connect(_on_attack_hit)
 	down_attack.body_entered.connect(_on_attack_hit)
 	left_attack.body_entered.connect(_on_attack_hit)
@@ -55,7 +66,7 @@ func _ready():
 	right_sprite.animation_finished.connect(_on_attack_animation_finished)
 
 func setup_attack_areas():
-	# Disable monitoring for all attack areas
+	# Disable all attack area monitoring initially
 	up_attack.monitoring = false
 	down_attack.monitoring = false
 	left_attack.monitoring = false
@@ -69,6 +80,7 @@ func setup_attack_sprites():
 	right_sprite.visible = false
 
 func _process(delta):
+	# Update timers
 	handle_attack_timers(delta)
 	
 	# Check for attack input
@@ -89,22 +101,21 @@ func handle_attack_timers(delta):
 			end_attack()
 
 func start_attack():
+	# Set attack state
 	is_attacking = true
 	can_attack = false
 	attack_timer = attack_duration
 	cooldown_timer = attack_cooldown
 	
-	# Determine attack direction
+	# Determine and execute attack direction
 	current_attack_direction = get_attack_direction()
-	
-	# Activate appropriate attack area and play animation
 	activate_attack_area(current_attack_direction)
 	play_attack_animation(current_attack_direction)
 	
 	print("Attacking ", AttackDirection.keys()[current_attack_direction])
 
 func get_attack_direction() -> AttackDirection:
-	# Check for directional input first (Hollow Knight style)
+	# Check directional input (Hollow Knight style)
 	if Input.is_action_pressed("jump"):
 		return AttackDirection.UP
 	elif Input.is_action_pressed("down"):
@@ -114,17 +125,17 @@ func get_attack_direction() -> AttackDirection:
 	elif Input.is_action_pressed("right"):
 		return AttackDirection.RIGHT
 	else:
-		# No directional input, use facing direction
+		# No directional input - use facing direction
 		if player.facing_direction > 0:
 			return AttackDirection.RIGHT
 		else:
 			return AttackDirection.LEFT
 
 func activate_attack_area(direction: AttackDirection):
-	# Deactivate all attack areas first
+	# Deactivate all areas first
 	deactivate_all_attack_areas()
 	
-	# Activate the appropriate area
+	# Activate the appropriate attack area
 	match direction:
 		AttackDirection.UP:
 			up_attack.monitoring = true
@@ -139,7 +150,7 @@ func play_attack_animation(direction: AttackDirection):
 	# Hide all sprites first
 	hide_all_attack_sprites()
 	
-	# Show and play the appropriate animation
+	# Show and play appropriate animation
 	match direction:
 		AttackDirection.UP:
 			up_sprite.visible = true
@@ -155,25 +166,27 @@ func play_attack_animation(direction: AttackDirection):
 			right_sprite.play("right_attack")
 
 func deactivate_all_attack_areas():
+	# Turn off all attack area monitoring
 	up_attack.monitoring = false
 	down_attack.monitoring = false
 	left_attack.monitoring = false
 	right_attack.monitoring = false
 
 func hide_all_attack_sprites():
+	# Hide all attack visual effects
 	up_sprite.visible = false
 	down_sprite.visible = false
 	left_sprite.visible = false
 	right_sprite.visible = false
 
 func end_attack():
+	# Clear attack state
 	is_attacking = false
 	deactivate_all_attack_areas()
 	hide_all_attack_sprites()
 
 func _on_attack_animation_finished():
-	# Optional: End attack when animation finishes instead of using timer
-	# This ensures the visual effect matches the actual attack duration
+	# End attack when animation completes
 	if is_attacking:
 		end_attack()
 
@@ -182,51 +195,57 @@ func _on_attack_hit(body):
 	if not is_attacking:
 		return
 	
-	# Handle hitting enemies or destructible objects
+	# Play hit sound effect
+	if hit_sound:
+		hit_sound.play()
+	
+	# Apply damage to hit targets
 	if body.has_method("take_damage"):
 		body.take_damage(attack_damage)
 	elif body.has_method("on_hit"):
 		body.on_hit(attack_damage)
 	
-	# Apply knockback to player in opposite direction
+	# Apply knockback to player (pogo effect)
 	apply_player_knockback(body)
 	
 	print("Hit: ", body.name)
 
 func apply_player_knockback(hit_body):
-	# Calculate direction from hit object to player
-	var knockback_direction = Vector2.ZERO
-	
-	# Get direction based on which attack area was used
-	match current_attack_direction:
-		AttackDirection.UP:
-			knockback_direction = Vector2(0, 1)  # Push player down
-		AttackDirection.DOWN:
-			knockback_direction = Vector2(0, -1)  # Push player up
-		AttackDirection.LEFT:
-			knockback_direction = Vector2(1, 0)  # Push player right
-		AttackDirection.RIGHT:
-			knockback_direction = Vector2(-1, 0)  # Push player left
-	
-	# Apply impulse-style knockback with velocity override
+	# Calculate knockback direction based on attack direction
+	var knockback_direction = get_knockback_direction()
 	var knockback_velocity = knockback_direction * knockback_force
 	
-	# Override existing velocity partially for more responsive knockback
+	# Apply velocity override for responsive knockback
 	if current_attack_direction == AttackDirection.UP or current_attack_direction == AttackDirection.DOWN:
-		# For vertical attacks, override Y velocity more strongly
+		# Override Y velocity for vertical attacks
 		player.velocity.y = lerp(player.velocity.y, knockback_velocity.y, knockback_override_strength)
 	else:
-		# For horizontal attacks, override X velocity more strongly
+		# Override X velocity for horizontal attacks
 		player.velocity.x = lerp(player.velocity.x, knockback_velocity.x, knockback_override_strength)
 	
-	# Always add some impulse on top for extra "spring"
-	player.velocity += knockback_velocity * 0.3
+	# Add impulse for extra bounce effect
+	player.velocity += knockback_velocity * KNOCKBACK_IMPULSE_MULTIPLIER
 
-# Utility functions
+func get_knockback_direction() -> Vector2:
+	# Return knockback direction based on attack direction
+	match current_attack_direction:
+		AttackDirection.UP:
+			return Vector2(0, 1)    # Push player down
+		AttackDirection.DOWN:
+			return Vector2(0, -1)   # Push player up
+		AttackDirection.LEFT:
+			return Vector2(1, 0)    # Push player right
+		AttackDirection.RIGHT:
+			return Vector2(-1, 0)   # Push player left
+		_:
+			return Vector2.ZERO
+
+# Public interface
 func is_attack_ready() -> bool:
 	return can_attack
 
 func get_attack_cooldown_progress() -> float:
+	# Return cooldown progress (1.0 = full cooldown, 0.0 = ready)
 	if cooldown_timer > 0:
 		return cooldown_timer / attack_cooldown
 	else:
