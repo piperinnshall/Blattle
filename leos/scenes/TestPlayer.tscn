@@ -1,0 +1,209 @@
+[gd_scene load_steps=22 format=3 uid="uid://do7uew7t2n8is"]
+
+[ext_resource type="Script" uid="uid://d244wbg60df3d" path="res://leos/scripts/test_player.gd" id="1_48cbw"]
+[ext_resource type="Texture2D" uid="uid://bygkgbxr8pco5" path="res://leos/assets/Ski_trail_rating_symbol_black_circle.png" id="2_gv105"]
+[ext_resource type="Script" uid="uid://c6wgp3hbown7u" path="res://leos/scenes/progress_bar.gd" id="2_k3vus"]
+[ext_resource type="Script" uid="uid://ql3vwssjp7yd" path="res://leos/scenes/attack_system.gd" id="3_by1fd"]
+[ext_resource type="Script" uid="uid://dmujpl8aj26w1" path="res://leos/scripts/label.gd" id="4_hb7ax"]
+[ext_resource type="Texture2D" uid="uid://da1vcib0udvub" path="res://leos/assets/New Project.png" id="4_wmii8"]
+[ext_resource type="Texture2D" uid="uid://gdeyn8jestyk" path="res://leos/assets/New Project (1).png" id="5_gv105"]
+[ext_resource type="AudioStream" uid="uid://dx5jsa18hjkyp" path="res://leos/assets/hitmarker-sound-effect.mp3" id="7_tfiva"]
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gv105"]
+polygon = PackedVector2Array(4, -32, 9, -31, 16, -28, 22, -23, 27, -17, 30, -9, 32, -1, 31, 7, 29, 14, 24, 21, 18, 26, 11, 30, 3, 32, -4, 32, -12, 30, -19, 26, -24, 21, -28, 15, -31, 8, -32, 1, -31, -7, -29, -14, -26, -19, -21, -24, -15, -28, -8, -31, -2, -32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hb7ax"]
+radius = 32.249
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hb7ax"]
+size = Vector2(114, 72.4376)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfiva"]
+atlas = ExtResource("5_gv105")
+region = Rect2(0, 500, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ylchu"]
+atlas = ExtResource("5_gv105")
+region = Rect2(544, 500, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_48mwp"]
+atlas = ExtResource("5_gv105")
+region = Rect2(0, 0, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eo4gv"]
+atlas = ExtResource("5_gv105")
+region = Rect2(544, 0, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_on4te"]
+atlas = ExtResource("5_gv105")
+region = Rect2(0, 0, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qvgkf"]
+atlas = ExtResource("5_gv105")
+region = Rect2(544, 0, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmii8"]
+atlas = ExtResource("5_gv105")
+region = Rect2(0, 1000, 535, 500)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv105"]
+atlas = ExtResource("5_gv105")
+region = Rect2(544, 1000, 535, 500)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_p6vwq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_wmii8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfiva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ylchu")
+}],
+"loop": false,
+"name": &"down_attack",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_48mwp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eo4gv")
+}],
+"loop": false,
+"name": &"left_attack",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_on4te")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qvgkf")
+}],
+"loop": false,
+"name": &"right_attack",
+"speed": 20.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmii8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv105")
+}],
+"loop": false,
+"name": &"up_attack",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mpjq4"]
+size = Vector2(80.25, 62)
+
+[node name="TestPlayer" type="CharacterBody2D" groups=["Players"]]
+position = Vector2(0, -2)
+script = ExtResource("1_48cbw")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_gv105")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_hb7ax")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+scale = Vector2(0.126667, 0.126667)
+texture = ExtResource("2_gv105")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_left = -20.0
+offset_top = -63.0
+offset_right = 19.0
+offset_bottom = -36.0
+max_value = 1.0
+show_percentage = false
+script = ExtResource("2_k3vus")
+ready_color = Color(0, 0, 0.545098, 0.611765)
+background_color = Color(0, 0, 0, 0.662745)
+
+[node name="AttackSystem" type="Node2D" parent="."]
+script = ExtResource("3_by1fd")
+
+[node name="UpAttack" type="Area2D" parent="AttackSystem"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/UpAttack"]
+position = Vector2(2, -92.2188)
+shape = SubResource("RectangleShape2D_hb7ax")
+
+[node name="AttackSprite" type="AnimatedSprite2D" parent="AttackSystem/UpAttack"]
+modulate = Color(1, 1, 1, 0.623529)
+z_index = 20
+position = Vector2(7, -61)
+scale = Vector2(0.436, 0.436)
+sprite_frames = SubResource("SpriteFrames_p6vwq")
+animation = &"up_attack"
+
+[node name="DownAttack" type="Area2D" parent="AttackSystem"]
+position = Vector2(0, 126)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/DownAttack"]
+position = Vector2(0, -42.0625)
+shape = SubResource("RectangleShape2D_hb7ax")
+
+[node name="AttackSprite" type="AnimatedSprite2D" parent="AttackSystem/DownAttack"]
+modulate = Color(1, 1, 1, 0.65098)
+z_index = 20
+position = Vector2(0, -64)
+scale = Vector2(0.378037, 0.441)
+sprite_frames = SubResource("SpriteFrames_p6vwq")
+animation = &"down_attack"
+
+[node name="RightAttack" type="Area2D" parent="AttackSystem"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/RightAttack"]
+position = Vector2(101, -5)
+shape = SubResource("RectangleShape2D_mpjq4")
+
+[node name="AttackSprite" type="AnimatedSprite2D" parent="AttackSystem/RightAttack"]
+modulate = Color(1, 1, 1, 0.639216)
+z_index = 20
+position = Vector2(77.0625, 10.625)
+scale = Vector2(0.373598, 0.2945)
+sprite_frames = SubResource("SpriteFrames_p6vwq")
+animation = &"right_attack"
+
+[node name="LeftAttack" type="Area2D" parent="AttackSystem"]
+position = Vector2(-135, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackSystem/LeftAttack"]
+position = Vector2(41, 0)
+shape = SubResource("RectangleShape2D_mpjq4")
+
+[node name="AttackSprite" type="AnimatedSprite2D" parent="AttackSystem/LeftAttack"]
+modulate = Color(1, 1, 1, 0.694118)
+z_index = 20
+position = Vector2(63, -12)
+scale = Vector2(0.370794, 0.27975)
+sprite_frames = SubResource("SpriteFrames_p6vwq")
+animation = &"left_attack"
+flip_h = true
+flip_v = true
+
+[node name="HitSound" type="AudioStreamPlayer2D" parent="AttackSystem"]
+stream = ExtResource("7_tfiva")
+bus = &"SFX"
+
+[node name="Label" type="Label" parent="."]
+top_level = true
+offset_left = -20.0
+offset_top = -2.0
+offset_right = 20.0
+offset_bottom = 21.0
+script = ExtResource("4_hb7ax")
