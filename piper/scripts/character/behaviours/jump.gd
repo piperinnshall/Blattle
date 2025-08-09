@@ -8,6 +8,9 @@ class_name Jump
 var _jumps_left := 0
 var _coyote_timer := 0.0
 
+func is_busy() -> bool:
+	return false
+
 func perform(character):
 	if _jumps_left > 0 or _coyote_timer > 0.0:
 		character.velocity.y = -jump_force

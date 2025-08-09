@@ -26,8 +26,9 @@ func _physics_process(delta):
 	_handle_movement(delta)
 	_handle_behaviour(delta, jump, "jump", _get_jump_input())
 	_handle_behaviour(delta, dash, "dash", _get_dash_input())
-	_handle_behaviour(delta, attack, "attack", _get_light_input())
-
+	_handle_behaviour(delta, attack, "light", _get_light_input())
+	_handle_behaviour(delta, attack, "heavy", _get_heavy_input())
+	
 	_update_input_buffer(delta)
 	
 	move_and_slide()
@@ -44,6 +45,7 @@ func _get_heavy_input() -> bool: return false
 
 func _apply_damage(damage): 
 	_health += damage
+	queue_free()
 
 # --- Movement ---
 
@@ -61,7 +63,7 @@ func _handle_movement(delta: float):
 
 func _handle_behaviour(delta, behaviour, behaviour_str, input):
 	behaviour.update(self, delta)
-	if input:
+	if input and not behaviour.is_busy():
 		_buffer_input(behaviour_str)
 	if _input_buffer.has(behaviour_str):
 		behaviour.perform(self)

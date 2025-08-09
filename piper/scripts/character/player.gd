@@ -5,7 +5,7 @@ extends Character
 @export var input_right: String = "right"
 @export var input_jump: String = "up"
 @export var input_dash: String = "dash"
-@export var input_light: String = "ui_up"
+@export var input_light: String = "light"
 @export var input_heavy: String = "heavy"
 
 func _get_movement_input() -> float:

@@ -31,3 +31,12 @@ polygon = PackedVector2Array(-30, 0, -30, 540, 990, 540, 990, 0, 960, 0, 960, 43
 
 [node name="Player" parent="." instance=ExtResource("2_urkm7")]
 position = Vector2(389, 100)
+
+[node name="Player2" parent="." instance=ExtResource("2_urkm7")]
+position = Vector2(227, -3)
+input_left = "ui_left"
+input_right = "ui_right"
+input_jump = "ui_up"
+input_dash = "ui_accept"
+input_light = ""
+input_heavy = ""

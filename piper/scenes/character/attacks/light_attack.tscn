@@ -1,7 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://csibry5bact0d"]
+[gd_scene load_steps=2 format=3 uid="uid://bndj4upy8w0pc"]
 
-[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attacks/attacks.tscn" id="1_50jny"]
-[ext_resource type="Script" uid="uid://cgsrbrur7pol3" path="res://piper/scripts/character/attacks/light_attack.gd" id="2_uyq8f"]
+[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attacks/attacks.tscn" id="1_bdevd"]
 
-[node name="LightAttack" instance=ExtResource("1_50jny")]
-script = ExtResource("2_uyq8f")
+[node name="LightAttack" instance=ExtResource("1_bdevd")]

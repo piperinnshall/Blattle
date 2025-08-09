@@ -1,8 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmrfk13i7tg22"]
+[gd_scene load_steps=2 format=3 uid="uid://bmxluixno6yme"]
 
-[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attacks/attacks.tscn" id="1_gd58r"]
-[ext_resource type="Script" uid="uid://dgygrh7qlmetr" path="res://piper/scripts/character/attacks/heavy_attack.gd" id="2_kou8c"]
+[ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attacks/attacks.tscn" id="1_qghrc"]
 
-[node name="Attack" instance=ExtResource("1_gd58r")]
+[node name="HeavyAttack" instance=ExtResource("1_qghrc")]
+
+[node name="HitBoxShape" parent="." index="0"]
 scale = Vector2(1.5, 1.5)
-script = ExtResource("2_kou8c")
