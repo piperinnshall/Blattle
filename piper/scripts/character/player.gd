@@ -20,5 +20,5 @@ func get_dash_input() -> bool:
 func get_light_input() -> bool:
 	return Input.is_action_just_pressed(input_light)
 
-func _get_heavy_input() -> bool:
+func get_heavy_input() -> bool:
 	return Input.is_action_just_pressed(input_heavy)

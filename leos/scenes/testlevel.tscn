@@ -135,6 +135,7 @@ offset_bottom = 284.0
 size_flags_horizontal = 6
 
 [node name="Player2" parent="." instance=ExtResource("8_ivy6k")]
+position = Vector2(953, 105)
 input_left = "player2left"
 input_right = "player2right"
 input_jump = "player2jump"
