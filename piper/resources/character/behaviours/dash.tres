@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Dash" load_steps=2 format=3 uid="uid://duumhtwfouekx"]
+
+[ext_resource type="Script" uid="uid://j37gm562yyke" path="res://piper/scripts/character/behaviours/dash.gd" id="1_xgrq3"]
+
+[resource]
+script = ExtResource("1_xgrq3")
+dash_speed = 600.0
+dash_duration = 0.2
+dash_cooldown = 0.5

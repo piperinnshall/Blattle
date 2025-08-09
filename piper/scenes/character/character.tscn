@@ -1,0 +1,23 @@
+[gd_scene load_steps=7 format=3 uid="uid://0lntb6nkv1we"]
+
+[ext_resource type="Script" uid="uid://qbayfdl1adfg" path="res://piper/scripts/character/character.gd" id="1_mr1wk"]
+[ext_resource type="Resource" uid="uid://duumhtwfouekx" path="res://piper/resources/character/behaviours/dash.tres" id="2_eyt33"]
+[ext_resource type="Resource" uid="uid://c8ph2p2ca36gl" path="res://piper/resources/character/behaviours/jump.tres" id="2_yt6il"]
+[ext_resource type="Texture2D" uid="uid://bk741as5vg4kg" path="res://piper/resources/character/Circle.png" id="3_ufsf1"]
+[ext_resource type="Resource" uid="uid://dcm6net50w2ek" path="res://piper/resources/character/behaviours/attack.tres" id="4_20n1m"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_enxlx"]
+radius = 29.0172
+
+[node name="Character" type="CharacterBody2D"]
+script = ExtResource("1_mr1wk")
+jump = ExtResource("2_yt6il")
+dash = ExtResource("2_eyt33")
+attack = ExtResource("4_20n1m")
+
+[node name="HurtboxShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_enxlx")
+
+[node name="Sprite2D" type="Sprite2D" parent="HurtboxShape"]
+scale = Vector2(0.038, 0.038)
+texture = ExtResource("3_ufsf1")
