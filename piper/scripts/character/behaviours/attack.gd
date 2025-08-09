@@ -105,7 +105,6 @@ func _spawn_hitbox(character, attack_type: AttackType):
 				duration = 0.2
 		timer.wait_time = duration
 		timer.one_shot = true
-		timer.start()
 	
 	var dir = character._get_movement_input()
 	var offset = Vector2.ZERO

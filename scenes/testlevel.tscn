@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://b2i3pr2ejrmkd"]
 
-[ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
+[ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://leos/assets/2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
 [ext_resource type="Script" uid="uid://bvr74pqghfcdf" path="res://scripts/testlevel.gd" id="1_hyqgw"]
 [ext_resource type="PackedScene" uid="uid://do7uew7t2n8is" path="res://scenes/TestPlayer.tscn" id="2_6ewva"]
 [ext_resource type="PackedScene" uid="uid://cfr2gwmxc3aii" path="res://scenes/hittable_object.tscn" id="3_jiwm1"]

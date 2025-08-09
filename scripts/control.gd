@@ -23,8 +23,6 @@ func _ready():
 	player2_health_bar.max_value = MAX_HEALTH
 	player1_health_bar.value = MAX_HEALTH
 	player2_health_bar.value = MAX_HEALTH
-	
-
 
 func _process(delta):
 	update_health_bars()

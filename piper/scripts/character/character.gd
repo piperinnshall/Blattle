@@ -17,7 +17,7 @@ class_name Character
 
 # --- State ---
 
-var _health := 0
+var _health := 100
 var _input_buffer := {}
 
 # --- Built-in ---
@@ -43,9 +43,11 @@ func _get_heavy_input() -> bool: return false
 
 # --- Attack ---
 
-func _apply_damage(damage): 
-	_health += damage
-	queue_free()
+func take_damage(damage): 
+	_health -= damage
+
+func get_health() -> int:
+	return _health
 
 # --- Movement ---
 

@@ -111,7 +111,7 @@ func handle_input_buffering(delta):
 		input_buffer_timer -= delta
 	
 	# Buffer jump input
-	if Input.is_action_just_pressed("ui_accept") or Input.is_action_just_pressed("jump"):
+	if Input.is_action_just_pressed("jump"):
 		buffered_jump = true
 		jump_buffer_timer = jump_buffer_time
 		input_buffer_timer = input_buffer_time
