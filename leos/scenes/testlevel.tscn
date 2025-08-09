@@ -2,11 +2,11 @@
 
 [ext_resource type="Texture2D" uid="uid://cqn6abucyx618" path="res://leos/assets/2c619dcb-a6ce-4f31-ae4d-376daaeffa7d.png" id="1_7ixgg"]
 [ext_resource type="Script" uid="uid://bvr74pqghfcdf" path="res://scripts/testlevel.gd" id="1_hyqgw"]
-[ext_resource type="PackedScene" uid="uid://do7uew7t2n8is" path="res://leos/scenes/TestPlayer.tscn" id="2_6ewva"]
+[ext_resource type="PackedScene" uid="uid://do7uew7t2n8is" path="res://scenes/TestPlayer.tscn" id="2_6ewva"]
 [ext_resource type="PackedScene" uid="uid://cfr2gwmxc3aii" path="res://scenes/hittable_object.tscn" id="3_jiwm1"]
 [ext_resource type="PackedScene" uid="uid://cdcq14nucamxn" path="res://scenes/moon.tscn" id="5_7ixgg"]
-[ext_resource type="PackedScene" uid="uid://bv5jav4dhu5nu" path="res://leos/scenes/HealthBars.tscn" id="5_hyqgw"]
-[ext_resource type="PackedScene" uid="uid://dyvaunj3fkxqn" path="res://scenes/DeathMenu.tscn" id="7_bx6wm"]
+[ext_resource type="PackedScene" uid="uid://bv5jav4dhu5nu" path="res://scenes/HealthBars.tscn" id="5_hyqgw"]
+[ext_resource type="PackedScene" uid="uid://dyvaunj3fkxqn" path="res://leos/scenes/DeathMenu.tscn" id="7_bx6wm"]
 [ext_resource type="PackedScene" uid="uid://dm84abbsaarte" path="res://piper/scenes/character/player.tscn" id="8_ivy6k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ewva"]
@@ -19,7 +19,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_7ixgg")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bx6wm"]
-size = Vector2(296, 592)
+size = Vector2(774, 592)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jiwm1"]
 size = Vector2(360, 916)
@@ -74,7 +74,7 @@ position = Vector2(703, 169)
 freeze = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D4"]
-position = Vector2(-147, 291)
+position = Vector2(-386, 291)
 shape = SubResource("RectangleShape2D_bx6wm")
 
 [node name="RigidBody2D2" type="RigidBody2D" parent="."]
@@ -135,7 +135,6 @@ offset_bottom = 284.0
 size_flags_horizontal = 6
 
 [node name="Player2" parent="." instance=ExtResource("8_ivy6k")]
-position = Vector2(908, 120)
 input_left = "player2left"
 input_right = "player2right"
 input_jump = "player2jump"
