@@ -1,8 +1,8 @@
 # CGRA 252 Assignment 1
 
-## Leonardo Riginelli
+### Leonardo Riginelli
 
-Blattle
+#### Blattle
 
 [Video](https://youtu.be/fXHY7HlhPiA)
 
