@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdcq14nucamxn"]
+
+[ext_resource type="Script" uid="uid://ha0bs760kxxi" path="res://scripts/moon.gd" id="1_fyi6v"]
+[ext_resource type="Texture2D" uid="uid://b7vuj63lkfxku" path="res://images.png" id="2_7l7dh"]
+[ext_resource type="PackedScene" uid="uid://dduiowvsy1h6p" path="res://scenes/TestNPC.tscn" id="2_xatjt"]
+[ext_resource type="Texture2D" uid="uid://djt2m1eapdskw" path="res://170-1709387_white-light-effect-png.png" id="3_xatjt"]
+
+[node name="Moon" type="Node2D"]
+script = ExtResource("1_fyi6v")
+enemy_scene = ExtResource("2_xatjt")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -1)
+texture = ExtResource("2_7l7dh")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 2.0
+shadow_enabled = true
+texture = ExtResource("3_xatjt")
+texture_scale = 2.0
+
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 20.0
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(2, -320)
+
+[node name="EnemyContainer" type="Node2D" parent="."]

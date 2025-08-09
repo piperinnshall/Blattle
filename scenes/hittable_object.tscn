@@ -1,0 +1,71 @@
+[gd_scene load_steps=10 format=3 uid="uid://cfr2gwmxc3aii"]
+
+[ext_resource type="Script" uid="uid://bbqo813wklsqd" path="res://scripts/hittable_object.gd" id="1_v7hw1"]
+[ext_resource type="Texture2D" uid="uid://j2jk651ofj0a" path="res://pngtree-black-and-white-swirly-swirl-circle-vector-png-image_6954855.png" id="2_v7hw1"]
+[ext_resource type="Texture2D" uid="uid://bygkgbxr8pco5" path="res://Ski_trail_rating_symbol_black_circle.png" id="3_3sx86"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_v7hw1"]
+friction = 0.4
+bounce = 0.43
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2hps2"]
+radius = 38.2099
+
+[sub_resource type="Gradient" id="Gradient_v7hw1"]
+offsets = PackedFloat32Array(0.688889, 0.702222)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3sx86"]
+gradient = SubResource("Gradient_v7hw1")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s2bao"]
+radius = 43.4166
+
+[sub_resource type="Theme" id="Theme_2hps2"]
+
+[node name="HittableObject" type="RigidBody2D"]
+mass = 0.517
+physics_material_override = SubResource("PhysicsMaterial_v7hw1")
+gravity_scale = 0.9
+script = ExtResource("1_v7hw1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_2hps2")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D"]
+position = Vector2(2.26498e-06, 2.32458e-06)
+scale = Vector2(1.25, 1.25)
+texture = SubResource("GradientTexture2D_3sx86")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+scale = Vector2(0.251887, 0.251887)
+texture = ExtResource("2_v7hw1")
+
+[node name="HitArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitArea"]
+shape = SubResource("CircleShape2D_s2bao")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.811765)
+scale = Vector2(0.0761607, 0.0761607)
+texture = ExtResource("3_3sx86")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.5
+offset_top = -11.5
+offset_right = 11.5
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(11.5, 11.5)
+size_flags_horizontal = 6
+size_flags_vertical = 6
+theme = SubResource("Theme_2hps2")
