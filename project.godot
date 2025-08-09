@@ -11,7 +11,12 @@ config_version=5
 [application]
 
 config/name="Blattle"
+run/main_scene="uid://b2i3pr2ejrmkd"
 config/features=PackedStringArray("4.4", "Forward Plus")
+
+[audio]
+
+buses/default_bus_layout="res://leos/assets/default_bus_layout.tres"
 
 [display]
 
@@ -22,6 +27,10 @@ window/stretch/mode="canvas_items"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/softbody2d/plugin.cfg", "res://addons/vim/addons/godot-vim/plugin.cfg")
+
+[global_group]
+
+Players=""
 
 [input]
 
