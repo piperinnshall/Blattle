@@ -1,7 +1,9 @@
 # CGRA 252 Assignment 1
 
-Leonardo Riginelli
+## Leonardo Riginelli
+
 Blattle
+
 [Video](https://youtu.be/fXHY7HlhPiA)
 
 Blattle is a 2 player platform fighter where both players play on the same
