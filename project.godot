@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.4", "Forward Plus")
 
 buses/default_bus_layout="res://leos/assets/default_bus_layout.tres"
 
+[autoload]
+
+Audio="*res://audio.gd"
+
 [display]
 
 window/stretch/mode="canvas_items"
