@@ -5,24 +5,29 @@ class_name Character
 signal player_died(player: Node)
 
 # --- Exported Variables ---
+
 @export_group("Behaviours")
 @export var jump: Jump
 @export var dash: Dash
 @export var attack: Attack
+
 @export_group("Movement")
 @export var speed: float = 200.0
 @export var acceleration: float = 1000.0
 @export var friction: float = 1200.0
 @export var gravity: float = 800.0
 @export var buffer_time: float = 0.1
+
 @export_group("Health")
 @export var max_health: float = 100.0
 
 # --- State ---
+
 var _health := 100.0
 var input_buffer := {}
 
 # --- Built-in ---
+
 func _ready():
 	# Initialize health
 	_health = max_health
@@ -44,6 +49,7 @@ func _physics_process(delta):
 	move_and_slide()
 
 # --- Abstract ---
+
 func get_movement_input() -> float:  return 0
 func get_jump_input() -> bool:  return false
 func get_dash_input() -> bool: return false
@@ -81,6 +87,7 @@ func apply_damage(damage: float):
 	take_damage(damage)
 
 # --- Movement ---
+
 func handle_movement(delta: float):
 	if not is_on_floor():
 		velocity.y += gravity * delta

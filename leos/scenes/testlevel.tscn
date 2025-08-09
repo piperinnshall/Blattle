@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cfr2gwmxc3aii" path="res://scenes/hittable_object.tscn" id="3_jiwm1"]
 [ext_resource type="PackedScene" uid="uid://cdcq14nucamxn" path="res://scenes/moon.tscn" id="5_7ixgg"]
 [ext_resource type="PackedScene" uid="uid://bv5jav4dhu5nu" path="res://scenes/HealthBars.tscn" id="5_hyqgw"]
-[ext_resource type="PackedScene" uid="uid://dyvaunj3fkxqn" path="res://scenes/DeathMenu.tscn" id="7_bx6wm"]
+[ext_resource type="PackedScene" uid="uid://dyvaunj3fkxqn" path="res://leos/scenes/DeathMenu.tscn" id="7_bx6wm"]
 [ext_resource type="PackedScene" uid="uid://dm84abbsaarte" path="res://piper/scenes/character/player.tscn" id="8_ivy6k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ewva"]
@@ -135,7 +135,6 @@ offset_bottom = 284.0
 size_flags_horizontal = 6
 
 [node name="Player2" parent="." instance=ExtResource("8_ivy6k")]
-position = Vector2(908, 120)
 input_left = "player2left"
 input_right = "player2right"
 input_jump = "player2jump"

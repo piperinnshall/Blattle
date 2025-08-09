@@ -34,9 +34,9 @@ func perform(character):
 	if is_busy():
 		return
 
-	if character._get_light_input():
+	if character.get_light_input():
 		_queued_attack = AttackType.LIGHT
-	elif character._get_heavy_input():
+	elif character.get_heavy_input():
 		_queued_attack = AttackType.HEAVY
 	else:
 		_queued_attack = AttackType.NONE
@@ -106,7 +106,7 @@ func _spawn_hitbox(character, attack_type: AttackType):
 		timer.wait_time = duration
 		timer.one_shot = true
 	
-	var dir = character._get_movement_input()
+	var dir = character.get_movement_input()
 	var offset = Vector2.ZERO
 	if dir < 0:
 		offset = Vector2(-attack_offset, 0)

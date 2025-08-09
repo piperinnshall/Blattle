@@ -14,7 +14,7 @@ func is_busy() -> bool:
 	return false
 
 func perform(character) -> void:
-	var input_direction = character._get_movement_input()
+	var input_direction = character.get_movement_input()
 	if _cooldown_time > 0.0 or _is_dashing or input_direction == 0.0:
 		return
 	
