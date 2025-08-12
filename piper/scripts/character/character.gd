@@ -99,6 +99,9 @@ func handle_movement(delta: float):
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 
 # --- Behaviours ---
+func reset_behaviour():
+	attack.reset()
+	
 func handle_behaviour(delta, behaviour, behaviour_str, input):
 	behaviour.update(self, delta)
 	if input and not behaviour.is_busy():

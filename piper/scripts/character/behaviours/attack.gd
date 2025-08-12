@@ -7,7 +7,7 @@ enum AttackType {
 	HEAVY
 }
 
-@export var attack_offset: int = 32
+@export var attack_offset: int = 64
 
 @export_group("Durations")
 @export var light_attack_duration: float = 0.15  # seconds for light hitbox (active)
@@ -29,6 +29,17 @@ var _recovery_timer: float = 0.0
 
 func is_busy() -> bool:
 	return _is_attacking or _recovery_timer > 0.0
+	
+func reset():
+	_queued_attack = AttackType.NONE
+	_is_attacking = false
+	_frame_counter = 0
+	_recovery_timer = 0.0
+
+	if _active_hitbox and _active_hitbox.is_inside_tree():
+		_active_hitbox.queue_free()
+	_active_hitbox = null
+
 
 func perform(character):
 	if is_busy():

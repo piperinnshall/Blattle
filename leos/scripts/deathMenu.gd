@@ -72,6 +72,10 @@ func hide_death_menu():
 
 func _on_restart_pressed():
 	print("Restarting game...")
+	var players = get_tree().get_nodes_in_group("Players")
+	for player in players:
+		if player.has_method("reset_behaviour"): 
+			player.reset_behaviour()
 	hide_death_menu()
 	get_tree().reload_current_scene()
 
