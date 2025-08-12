@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dyvaunj3fkxqn"]
 
-[ext_resource type="Script" uid="uid://ch5pyv34lj0mq" path="res://scripts/deathMenu.gd" id="1_okyhj"]
+[ext_resource type="Script" uid="uid://ch5pyv34lj0mq" path="res://leos/scripts/deathMenu.gd" id="1_okyhj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -41,11 +41,12 @@ text = "Quit
 
 [node name="MuteButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Quit
+text = "Mute
 "
 
 [node name="VolumeLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+text = "Volume"
 
 [node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2

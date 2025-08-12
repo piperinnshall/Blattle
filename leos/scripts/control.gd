@@ -1,5 +1,4 @@
 extends Control
-class_name HealthBarUI
 
 # Health bar constants
 const MAX_HEALTH: float = 100.0

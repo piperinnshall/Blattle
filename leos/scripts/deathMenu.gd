@@ -1,5 +1,4 @@
 extends Control
-class_name DeathMenu
 
 # Audio settings constants
 const SFX_BUS_NAME: String = "SFX"

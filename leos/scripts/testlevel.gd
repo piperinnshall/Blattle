@@ -1,7 +1,7 @@
 extends Node2D
 class_name GameManager
 
-@onready var death_menu: DeathMenu = $Control2
+@onready var death_menu = $Control2
 
 func _ready():
 	# Connect to all players in the Players group
