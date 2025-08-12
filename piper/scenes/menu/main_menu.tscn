@@ -83,6 +83,21 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_5vwmi")
 theme_override_styles/normal = SubResource("StyleBoxFlat_as44i")
 text = "START"
 
+[node name="VS AI" type="Button" parent="ButtonContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_disabled_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_focus_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+theme_override_styles/focus = SubResource("StyleBoxEmpty_keljk")
+theme_override_styles/hover = SubResource("StyleBoxFlat_keljk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_5vwmi")
+theme_override_styles/normal = SubResource("StyleBoxFlat_as44i")
+text = "VS AI"
+
 [node name="Options" type="Button" parent="ButtonContainer"]
 layout_mode = 2
 size_flags_vertical = 3
@@ -128,5 +143,6 @@ theme_override_font_sizes/font_size = 100
 text = "BLATTLE"
 
 [connection signal="pressed" from="ButtonContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="ButtonContainer/VS AI" to="." method="_on_vs_ai_pressed"]
 [connection signal="pressed" from="ButtonContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="ButtonContainer/Exit" to="." method="_on_exit_pressed"]

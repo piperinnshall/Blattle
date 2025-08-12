@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Attack" load_steps=4 format=3 uid="uid://cr6bomb3k74c"]
+
+[ext_resource type="PackedScene" uid="uid://bmxluixno6yme" path="res://piper/scenes/character/attacks/heavy_attack.tscn" id="1_8w8m4"]
+[ext_resource type="PackedScene" uid="uid://bndj4upy8w0pc" path="res://piper/scenes/character/attacks/light_attack.tscn" id="2_2y1qg"]
+[ext_resource type="Script" uid="uid://betsb8m2csdk4" path="res://piper/scripts/character/behaviours/attack.gd" id="3_2lnvm"]
+
+[resource]
+script = ExtResource("3_2lnvm")
+attack_offset = 32
+light_attack_duration = 0.15
+heavy_attack_duration = 0.35
+recovery_seconds = 1.0
+light_attack_scene = ExtResource("2_2y1qg")
+heavy_attack_scene = ExtResource("1_8w8m4")
+light_startup_frames = 3
+heavy_startup_frames = 10
