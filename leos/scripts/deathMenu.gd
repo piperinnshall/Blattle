@@ -8,9 +8,11 @@ const DEFAULT_VOLUME_DB: float = -10.0
 
 # Node references
 @onready var restart_button: Button = $VBoxContainer/RestartButton
+@onready var menu_button: HSlider = $VBoxContainer/MenuButton
 @onready var quit_button: Button = $VBoxContainer/QuitButton
 @onready var volume_label: Label = $VBoxContainer/VolumeLabel
 @onready var volume_slider: HSlider = $VBoxContainer/VolumeSlider
+
 
 # Audio bus index
 var sfx_bus_index: int

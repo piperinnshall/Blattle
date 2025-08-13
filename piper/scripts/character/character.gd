@@ -57,6 +57,7 @@ func get_light_input() -> bool: return false
 func get_heavy_input() -> bool: return false
 
 # --- Health System ---
+
 func get_health() -> float:
 	return _health
 
@@ -99,6 +100,7 @@ func handle_movement(delta: float):
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
 
 # --- Behaviours ---
+
 func reset_behaviour():
 	attack.reset()
 	
@@ -111,6 +113,7 @@ func handle_behaviour(delta, behaviour, behaviour_str, input):
 		input_buffer.erase(behaviour_str)
 
 # --- Input Buffer ---
+
 func buffer_input(action: String):
 	input_buffer[action] = buffer_time
 
