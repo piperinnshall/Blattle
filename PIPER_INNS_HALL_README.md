@@ -7,135 +7,165 @@
 ---
 
 ## Project information
+
 - **Project:** CGRA252 / 2025 / Assignment 1  
-- **Commits:** 6  
-- **Branches:** 1  
-- **Tags:** 0
+- **Main Commits:** 33
+- **Branches:** 9  
 
 ---
 
-# Table of contents
-- [Overview](#overview)  
-- [What I built (Game description)](#what-i-built-game-description)  
-  - [Controls (Player 2)](#controls-player-2)  
-  - [Player / AI architecture summary](#player--ai-architecture-summary)  
-  - [Design patterns used](#design-patterns-used)  
-- [Main game mechanic](#main-game-mechanic)  
-- [Hardest part to implement](#hardest-part-to-implement)  
-- [Most interesting part](#most-interesting-part)  
-- [Reflection on learning](#reflection-on-learning)  
-- [Video demo](#video-demo)  
-- [Course / Assignment details](#course--assignment-details)  
-- [Notes for assessors](#notes-for-assessors)
+# Table of Contents
+
+1. [Overview](#overview)
+2. [What I Built (Game Description)](#what-i-built-game-description)
+   1. [Controls (Player 2)](#controls-player-2)
+   2. [Player / AI Architecture Summary](#player--ai-architecture-summary)
+      1. [Inheritance-Based Design](#inheritance-based-design)
+      2. [Composition-Based Design](#composition-based-design)
+      3. [Design Patterns Used](#design-patterns-used)
+3. [Main Game Mechanic](#main-game-mechanic)
+4. [Hardest Part to Implement](#hardest-part-to-implement)
+5. [Most Interesting Part](#most-interesting-part)
+6. [Reflection on Learning](#reflection-on-learning)
+7. [Video Demo](#video-demo)
 
 ---
 
 # Overview
-This repository contains my contribution to **Blattle**, a local two-player fighting prototype built in **Godot 4.4** (team project for CGRA252). My primary work was implementing **Player 2** (human-controlled) and a reusable **AI fighter system**, plus the attack system and architecture that lets both human and AI fighters share behaviour cleanly.
+
+This repository contains the code for **Blattle**, a local two-player fighting
+prototype built in **Godot 4.4**. My primary work was implementing **Player 2**
+(human-controlled) and an **AI fighter system**, plus the attack system and
+architecture that lets both human and AI fighters share behaviour cleanly.
 
 ---
 
 # What I built (Game description)
 
-**Blattle** is a short prototype where two fighters face off in a small arena. The project contains:
-- A `Character` base class that encapsulates movement, physics and health logic.
-- A `Player` subclass used for Player 2 (I implemented this).
-- An `AICharacter` subclass that replaces player input with an AI brain so the game can run in AI mode.
-- A modular attack system (`BaseAttack` → `LightAttack` / `HeavyAttack`) that can be extended by writing short scripts and assigning them in the editor.
+- A `Character` base class that encapsulates movement, physics and
+  health logic.
+- A `Player` subclass of `Character` used for Player 2.
+- An `AI` subclass of `Charachter` that replaces input with an AI
+  brain so the game can run in AI mode.
+- A modular attack system (`LightAttack` / `HeavyAttack` inherits from
+  `Attack`) that can be extended by writing short scripts and assigning them
+  in the editor. 
+- The Main Menu. 
+-In Game music handling.
 
 ## Controls (Player 2)
+
 - Movement: `I` `J` `K` `L`  
 - Light attack: ``;`` (semicolon)  
 - Heavy attack: `'` (single-quote)  
 - Dash: `Enter`
 
-> Player 1 (human) was implemented by my teammate Leo and uses a separate control mapping.
+> Player 1 was implemented by my teammate Leo and uses a separate control mapping.
 
 ## Player / AI architecture summary
-- `Character` (base): movement, collision/physics, health, animation hooks and attack handling.
+
+### Inheritance based design
+
+- `Character` (base): movement, physics, health, and behaviour handling,
+  as well as a "buffered input" system.
 - `Player` (human): adds input handling on top of `Character`.
-- `AICharacter` (AI): replaces input with a **State-based** brain that decides actions (idle, chase, attack, retreat, etc.) and calls the shared `Character` APIs to move/attack.
-- Attack system: `BaseAttack` is extended by `LightAttack` and `HeavyAttack`. Attacks are assigned to characters in the editor as separate scripts/resources.
+- `AICharacter` (AI): replaces input with a **State-based** brain that
+  decides actions (idle, chase, attack, retreat, etc.) and calls the shared
+  `Character` APIs to move/attack.
+- Attack system: `Attack` is extended by `LightAttack` and
+  `HeavyAttack`. Attacks are assigned to characters in the editor as separate
+  scripts/resources.
 
-## Design patterns used
-- **Strategy Pattern** — movement and attack behaviours are detachable strategy components. I can swap a character’s movement or attack implementation in the editor without modifying the base `Character` code.
-- **State Pattern** — the AI brain runs as a state machine (idle → chase → attack → retreat). Each state encapsulates its decision rules and transitions.
-- **Inheritance / Componentized Attacks** — `BaseAttack` with concrete subclasses (light/heavy). Adding new attacks is done by creating a new subclass/script and assigning it to the character.
+### Compositon based design
 
-This structure lets human and AI fighters reuse the same movement, animation and attack code while differing only in input source and decision logic.
+The `jump`, `dash` and `attack` (Separate to the `Attack` class) are
+dubbed: "behaviours". They are Godot `Resources` Nodes, that can be drag and
+dropped onto my `Character` class. The `Character` does not need to know
+what resource it has, because each resource has the same base functions:
+`update()`, and `perform()` Because  of this I can easily prototype many
+different resources, and create different types of player characters with
+different abilities, as standard in 2d platform fighters such as Super Smash
+Bros. This is a clear example of composition, mixed with the strategy pattern.
+
+### Design patterns used
+
+- **Strategy Pattern**: movement and attack behaviours are detachable
+  strategy components. I can swap a character’s movement or attack
+  implementation in the editor without modifying the base `Character` code.
+- **State Pattern**: the AI brain runs as a state machine (idle > chase >
+  attack > retreat). Each state encapsulates its decision rules and
+  transitions.
+
+This structure lets human and AI fighters reuse the same movement, animation
+and attack code while differing only in input source and decision logic.
 
 ---
 
 # Main game mechanic
-The core mechanic I focused on: a responsive AI fighter system that feels like a real opponent. The AI:
+
+The core mechanic I focused on: a responsive AI fighter system that feels like
+a real opponent. The AI:
 - Observes Player 1’s position and state.
 - Decides when to dash-in, use light or heavy attacks, or retreat.
-- Can interact with dynamic world objects (the ball, drones) so the match feels emergent rather than scripted.
+- Can interact with dynamic world objects (the ball, drones) so the match
+  feels emergent rather than scripted.
 
-This makes single-player practice against the AI feel like a real match rather than a passive demo.
+This makes single-player practice against the AI feel like a real match rather
+than a passive demo.
 
 ---
 
 # Hardest part to implement
-The biggest challenge was integrating a clean **State Pattern** AI with Godot’s scene and inheritance system while keeping `Character` as the single source of movement/attack/animation logic. I wanted to:
-- Keep `Character` responsibility focused (physics, animation, health).
-- Let `AICharacter` override only the input/decision layer.
 
-The difficulty came from ensuring the AI states could trigger character animations, root motion, dashes and attacks without duplicating movement or animation code. Once the architecture was settled (AI states call `Character` APIs rather than manipulate internals directly), adding new AI behaviours became straightforward.
+The biggest challenge was integrating a clean **State Pattern** based AI with
+Godot’s inheritance system while keeping `Character` as the single source of
+movement/attack/animation logic. 
+
+I wanted to:
+- Keep `Character` responsibility focused on physics, animation, health.
+- Let `AI` override only the input layer.
+
+The difficulty came from ensuring the AI states could trigger character
+animations, root motion, dashes and attacks without duplicating movement or
+animation code. Once the architecture was settled (AI states call `Character`
+APIs rather than manipulate internals directly), adding new AI behaviours
+became straightforward.
 
 ---
 
 # Most interesting part
-Because movement and attack behaviour are strategy components, I can create entirely different fighters by swapping scripts in the editor. The AI can be given any of those strategies, so new opponent types are cheap to make — a very flexible system for prototyping distinct fighters quickly.
+
+The dash, jump, and attack behaviours are strategy components, built using
+Godot's `Resources` Nodes. Because  of this I can create entirely different
+fighters by swapping scripts in the editor. The AI can be given any of those
+strategies, so new opponent types are cheap to make. This creates a very
+flexible system for prototyping distinct fighters quickly.
 
 ---
 
 # Reflection on learning
-Before this project I had not structured a Godot game with formal design patterns. Key takeaways:
 
-- Implemented the **state pattern** in Godot for modular AI decision-making; states are easy to add and test.
-- Used the **strategy pattern** to swap attack and movement components without rewriting `Character`.
-- Improved my understanding of inheritance and composition in Godot so multiple character types share core logic but keep separate control layers.
-- Set up autoloads for global sound management across scenes.
-- Built a main menu and settings menu with sliders and toggles connected to Godot’s audio bus system.
-- Learned practical workflow with Git (regular commits, useful commit messages, using issues to document learning progress).
+Before this project I had never used formal design patterns, or inheritance, in
+a Godot project. I implemented a state pattern for the AI, which makes decision
+logic modular and states easy to add and test. I used the strategy pattern so
+jump, dodge, and attack behaviours can be swapped without modifying the Character
+base class. I improved my understanding of inheritance and composition in Godot
+so different character types share core logic while keeping separate control
+layers. The attack system uses inheritance too, with a base `Attack` class
+extended by `LightAttack` and `HeavyAttack`. I set up "autoloads" for the
+first time for global sound management so audio persists across scenes, and I
+built a main menu and settings menu with sliders and toggles hooked into
+Godot’s audio bus system. This was my first ever menu in Godot as well.
+
+Overall, I learnt a lot making this project, and I have gotten significantly
+better at Godot while doing so. I hope to take these learned skills and use
+them in many more projects to come.
 
 ---
 
 # Video demo
-**Link to video:** *(place your video link here — OneDrive / YouTube / Vimeo / Google Drive, please include access permissions in the repo)*
 
-> Recommended length: 4–9 minutes. The video should demonstrate the prototype, show the code contribution, and explain what you learned.
-
----
-
-# Course / Assignment details (provided spec)
-**Assignment:** Assignment 1 — Due 8th August — 25%  
-**Objective:** Learn to use a game engine (Unreal 5.6 or Godot 4.4). Produce a project demonstrating engine integration and learning. Use gitlab.ecs.vuw.ac.nz for repo and regular commits.
-
-## Required submission README contents (this file contains the required information)
-- Course code: **CGRA252**  
-- Your name: **Simon McCallum**  
-- Assignment number: **Assignment 1**  
-- Title of the Technology / Game: **Piper Inns Hall — Blattle**  
-- Link to video: *(add link here)*  
-- Game Description: *(see above sections)*  
-  - What is the main game mechanic: AI fighter system + modular character system.  
-  - What was the hardest part to get working: AI state integration with Godot scenes and character architecture.  
-  - What is the most interesting part: flexible strategy-pattern based swapability of movement/attack systems.  
-- Reflection on learning: *(see Reflection on learning section above)*
-
-## Marking rubric (for reference)
-- Managing Inputs (I) — 25%  
-- World Update (U) — 25%  
-- Managing Outputs (O) — 25%  
-- Integration of the Engine (E) — 25%  
-- Video multiplier: 0.0 – 2.0
+[**Link to video**]() 
 
 ---
-
-# Notes for assessors / future work
-- The architecture supports fast iteration on new fighter types: create or swap movement/attack scripts in the editor to prototype new behaviours in minutes.
-- The AI system currently focuses on positional and cooldown-based decision-making; future work could add prediction, combo-planning, and difficulty scaling.
-- To test: run Play mode (human vs human) and AI mode (human vs AICharacter) to see both code paths share animation, physics and attack handling.
 
