@@ -7,10 +7,10 @@
 [resource]
 script = ExtResource("1_jrocd")
 attack_offset = 85
-light_attack_duration = 0.15
-heavy_attack_duration = 0.35
-recovery_seconds = 1.0
+light_attack_duration = null
+heavy_attack_duration = null
+recovery_seconds = null
 light_attack_scene = ExtResource("2_h2htg")
 heavy_attack_scene = ExtResource("1_tfgup")
-light_startup_frames = 3
-heavy_startup_frames = 10
+light_startup_frames = null
+heavy_startup_frames = null

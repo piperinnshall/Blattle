@@ -138,4 +138,3 @@ input_heavy = "player2heavy"
 
 [node name="Ai" parent="." instance=ExtResource("7_4vdyh")]
 position = Vector2(932, 285)
-attack_range = 150.0

@@ -7,7 +7,9 @@ enum AttackType {
 	HEAVY
 }
 
-@export var attack_offset: int = 64
+@export_group("Offsets")
+@export var light_attack_offset: int = 64
+@export var heavy_attack_offset: int = 85
 
 @export_group("Durations")
 @export var light_attack_duration: float = 0.15  # seconds for light hitbox (active)
@@ -99,7 +101,11 @@ func _spawn_hitbox(character, attack_type: AttackType):
 		push_error("Attack scene not assigned!")
 		return
 
-	var hitbox = scene.instantiate()
+	# instantiate and cast to Node2D so the type system knows the properties
+	var hitbox := scene.instantiate() as Node2D
+	if hitbox == null:
+		push_error("Failed to instantiate hitbox as Node2D.")
+		return
 	_active_hitbox = hitbox
 
 	hitbox.connect("hitbox_expired", Callable(self, "_on_hitbox_expired"))
@@ -117,17 +123,39 @@ func _spawn_hitbox(character, attack_type: AttackType):
 		timer.wait_time = duration
 		timer.one_shot = true
 	
+	# pick offset magnitude based on attack type
+	var offset_amount := 0
+	match attack_type:
+		AttackType.LIGHT:
+			offset_amount = light_attack_offset
+		AttackType.HEAVY:
+			offset_amount = heavy_attack_offset
+		_:
+			offset_amount = light_attack_offset
+
 	var dir = character.get_movement_input()
 	var offset = Vector2.ZERO
 	if dir < 0:
-		offset = Vector2(-attack_offset, 0)
+		offset = Vector2(-offset_amount, 0)
 	elif dir > 0:
-		offset = Vector2(attack_offset, 0)
+		offset = Vector2(offset_amount, 0)
 	else:
-		offset = Vector2(0, -attack_offset)
+		offset = Vector2(0, -offset_amount)
 	
 	hitbox.position = character.position + offset
 	hitbox.set_meta("offset", offset)
+	
+	var s: Vector2 = hitbox.scale
+	if dir > 0:
+		hitbox.rotation_degrees = 0
+		s.x = abs(s.x)
+	elif dir < 0:
+		hitbox.rotation_degrees = 0
+		s.x = -abs(s.x)
+	else:
+		hitbox.rotation_degrees = -45
+		s.x = abs(s.x)
+	hitbox.scale = s
 	
 	character.get_parent().add_child(hitbox)
 

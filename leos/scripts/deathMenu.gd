@@ -7,8 +7,8 @@ const MAX_VOLUME_DB: float = 0.0
 const DEFAULT_VOLUME_DB: float = -10.0
 
 # Node references
+@onready var menu_button: Button = $VBoxContainer/MenuButton
 @onready var restart_button: Button = $VBoxContainer/RestartButton
-@onready var menu_button: HSlider = $VBoxContainer/MenuButton
 @onready var quit_button: Button = $VBoxContainer/QuitButton
 @onready var volume_label: Label = $VBoxContainer/VolumeLabel
 @onready var volume_slider: HSlider = $VBoxContainer/VolumeSlider
@@ -49,6 +49,7 @@ func setup_volume_controls():
 
 func connect_signals():
 	# Connect button signals
+	menu_button.pressed.connect(_on_menu_pressed)
 	restart_button.pressed.connect(_on_restart_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	
@@ -70,6 +71,10 @@ func hide_death_menu():
 	# Hide menu and unpause
 	visible = false
 	get_tree().paused = false
+
+func _on_menu_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://piper/scenes/menu/main_menu.tscn")
 
 func _on_restart_pressed():
 	print("Restarting game...")

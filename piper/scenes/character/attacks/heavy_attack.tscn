@@ -4,7 +4,7 @@
 
 [node name="HeavyAttack" instance=ExtResource("1_qghrc")]
 scale = Vector2(3.4, 3.4)
-damage = 30
+damage = 20
 
 [node name="HitBoxShape" parent="." index="0"]
 scale = Vector2(1.5, 1.5)
