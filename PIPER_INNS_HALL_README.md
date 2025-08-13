@@ -1,15 +1,15 @@
 # Assignment 1
 
 **Course:** CGRA252  
-**Student:** Piper Inns Hall
-**Name:** Blattle
+**Student:** Piper Inns Hall  
+**Game Name:** Blattle
 
 ---
 
 ## Project information
 
 - **Project:** CGRA252 / 2025 / Assignment 1  
-- **Main Commits:** 33
+- **Main Commits:** 36
 - **Branches:** 9  
 
 ---
@@ -165,7 +165,7 @@ them in many more projects to come.
 
 # Video demo
 
-[**Link to video**]() 
+[**Link to video**](https://youtu.be/dqU8WVelu-Y) 
 
 ---
 
