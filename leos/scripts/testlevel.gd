@@ -1,5 +1,4 @@
 extends Node2D
-class_name GameManager
 
 @onready var death_menu = $Control2
 
