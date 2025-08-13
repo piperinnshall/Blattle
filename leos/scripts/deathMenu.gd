@@ -1,5 +1,4 @@
 extends Control
-class_name DeathMenu
 
 # Audio settings constants
 const SFX_BUS_NAME: String = "SFX"
@@ -8,10 +7,12 @@ const MAX_VOLUME_DB: float = 0.0
 const DEFAULT_VOLUME_DB: float = -10.0
 
 # Node references
+@onready var menu_button: Button = $VBoxContainer/MenuButton
 @onready var restart_button: Button = $VBoxContainer/RestartButton
 @onready var quit_button: Button = $VBoxContainer/QuitButton
 @onready var volume_label: Label = $VBoxContainer/VolumeLabel
 @onready var volume_slider: HSlider = $VBoxContainer/VolumeSlider
+
 
 # Audio bus index
 var sfx_bus_index: int
@@ -48,6 +49,7 @@ func setup_volume_controls():
 
 func connect_signals():
 	# Connect button signals
+	menu_button.pressed.connect(_on_menu_pressed)
 	restart_button.pressed.connect(_on_restart_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	
@@ -70,8 +72,16 @@ func hide_death_menu():
 	visible = false
 	get_tree().paused = false
 
+func _on_menu_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://piper/scenes/menu/main_menu.tscn")
+
 func _on_restart_pressed():
 	print("Restarting game...")
+	var players = get_tree().get_nodes_in_group("Players")
+	for player in players:
+		if player.has_method("reset_behaviour"): 
+			player.reset_behaviour()
 	hide_death_menu()
 	get_tree().reload_current_scene()
 

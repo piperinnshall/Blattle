@@ -3,6 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://dgk3vbtcbvnpk" path="res://piper/scenes/character/attacks/attacks.tscn" id="1_qghrc"]
 
 [node name="HeavyAttack" instance=ExtResource("1_qghrc")]
+scale = Vector2(3.4, 3.4)
+damage = 20
 
 [node name="HitBoxShape" parent="." index="0"]
 scale = Vector2(1.5, 1.5)

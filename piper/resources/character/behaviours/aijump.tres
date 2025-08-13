@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Jump" load_steps=2 format=3 uid="uid://q26ym2x8efdn"]
+
+[ext_resource type="Script" uid="uid://blkbmg4hi07lf" path="res://piper/scripts/character/behaviours/jump.gd" id="1_yq0l5"]
+
+[resource]
+script = ExtResource("1_yq0l5")
+jump_force = 400.0
+max_jumps = 2
+coyote_time = 0.1

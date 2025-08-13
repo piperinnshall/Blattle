@@ -7,6 +7,9 @@ func _ready() -> void:
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://leos/scenes/testlevel.tscn")
 
+func _on_vs_ai_pressed() -> void:
+	get_tree().change_scene_to_file("res://leos/scenes/testlevel_ai.tscn")
+
 func _on_options_pressed() -> void:
 	get_tree().change_scene_to_file("res://piper/scenes/menu/options_menu.tscn")
 

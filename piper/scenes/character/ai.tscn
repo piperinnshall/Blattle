@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://ceeb728grpkpp"]
+
+[ext_resource type="PackedScene" uid="uid://0lntb6nkv1we" path="res://piper/scenes/character/character.tscn" id="1_382f4"]
+[ext_resource type="Script" uid="uid://b5jvcp5cu5q7t" path="res://piper/scripts/character/ai.gd" id="2_s4182"]
+[ext_resource type="Resource" uid="uid://q26ym2x8efdn" path="res://piper/resources/character/behaviours/aijump.tres" id="3_ibjnk"]
+[ext_resource type="Resource" uid="uid://bbkbu3ttva50q" path="res://piper/resources/character/behaviours/aidash.tres" id="4_l3bcu"]
+[ext_resource type="Resource" uid="uid://cr6bomb3k74c" path="res://piper/resources/character/behaviours/aiattack.tres" id="5_vvhru"]
+
+[node name="Ai" instance=ExtResource("1_382f4")]
+script = ExtResource("2_s4182")
+chase_range = 400.0
+attack_range = 150.0
+optimal_attack_distance = 80.0
+jump_threshold = 50.0
+attack_cooldown = 1.5
+retreat_duration = 0.8
+heavy_attack_chance = 0.3
+jump = ExtResource("3_ibjnk")
+dash = ExtResource("4_l3bcu")
+attack = ExtResource("5_vvhru")

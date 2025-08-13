@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dyvaunj3fkxqn"]
 
-[ext_resource type="Script" uid="uid://ch5pyv34lj0mq" path="res://scripts/deathMenu.gd" id="1_okyhj"]
+[ext_resource type="Script" uid="uid://ch5pyv34lj0mq" path="res://leos/scripts/deathMenu.gd" id="1_okyhj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -18,16 +18,21 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -47.0
+offset_top = -63.0
+offset_right = 47.0
+offset_bottom = 147.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "MATCH END"
+horizontal_alignment = 1
+
+[node name="MenuButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Menu"
 
 [node name="RestartButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -39,8 +44,14 @@ layout_mode = 2
 text = "Quit
 "
 
+[node name="MuteButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mute
+"
+
 [node name="VolumeLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+text = "Volume"
 
 [node name="VolumeSlider" type="HSlider" parent="VBoxContainer"]
 layout_mode = 2
